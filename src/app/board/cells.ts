@@ -4,11 +4,45 @@ export class Cell {
     public x: number = 0; //column # of the cell (column 1 is 0)
     public y: number = 0; //row # of the cell (row 1 is 0)
     //creates Cell object, setting parameters to fields
+    public imageAddress: string = '';
     constructor(isMine: boolean, surroundingMines: number, x: number, y: number) {
         this.isMine = isMine;
         this.surroundingMines = surroundingMines;
         this.x = x;
         this.y = y;
+        if (isMine) {
+            this.imageAddress = "././assets/mine.png";
+        }
+        else if (surroundingMines == 1) {
+            this.imageAddress = "././assets/number1.png";
+        }
+        else if (surroundingMines == 2) {
+            this.imageAddress = "././assets/number2.png";
+        }
+        else if (surroundingMines == 3) {
+            this.imageAddress = "././assets/number3.png";
+        }
+        else if (surroundingMines == 4) {
+            this.imageAddress = "././assets/number4.png";
+        }
+        else if (surroundingMines == 5) {
+            this.imageAddress = "././assets/number5.png";
+        }
+        else if (surroundingMines == 6) {
+            this.imageAddress = "././assets/number6.png";
+        }
+        else if (surroundingMines == 7) {
+            this.imageAddress = "././assets/number7.png";
+        }
+        else if (surroundingMines == 8) {
+            this.imageAddress = "././assets/number8.png";
+        }
+        else if (surroundingMines == 9) {
+            this.imageAddress = "././assets/number9.png";
+        }
+        else if (surroundingMines == 10) {
+            this.imageAddress = "././assets/number10.png";
+        }
     }
     //if mine clicked
     public isClicked(): void {
