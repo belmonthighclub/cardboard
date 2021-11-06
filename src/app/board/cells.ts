@@ -4,7 +4,7 @@ export class Cell {
     public x: number = 0; //column # of the cell (column 1 is 0)
     public y: number = 0; //row # of the cell (row 1 is 0)
     //creates Cell object, setting parameters to fields
-    public imageAddress: string = '';
+    public imageAddress: string = ''; //address (i think) to the image for a cell
     constructor(isMine: boolean, surroundingMines: number, x: number, y: number) {
         this.isMine = isMine;
         this.surroundingMines = surroundingMines;
@@ -55,12 +55,7 @@ export class Cell {
         }
     }
     public display(): void {
-        if (this.isMine) {
-            //display mine pic
-        }
-        else {
-            //display number
-        }
+        //display imageAddress
     }
     public zeroClicked(): void {
         //reveal nearby zero cells and the boundary cells
