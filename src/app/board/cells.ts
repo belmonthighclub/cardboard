@@ -1,10 +1,10 @@
 export class Cell {
-    public isMine: boolean = false; //is this cell a mine
-    public surroundingMines: number = 0; //# of surrounding mines, 1-8
-    public x: number = 0; //column # of the cell (column 1 is 0)
-    public y: number = 0; //row # of the cell (row 1 is 0)
+    private isMine: boolean = false; //is this cell a mine
+    private surroundingMines: number = 0; //# of surrounding mines, 1-8
+    private x: number = 0; //column # of the cell (column 1 is 0)
+    private y: number = 0; //row # of the cell (row 1 is 0)
     //creates Cell object, setting parameters to fields
-    public imageAddress: string = ''; //address (i think) to the image for a cell
+    private imageAddress: string = ''; //address (i think) to the image for a cell
     constructor(isMine: boolean, surroundingMines: number, x: number, y: number) {
         this.isMine = isMine;
         this.surroundingMines = surroundingMines;
@@ -59,5 +59,8 @@ export class Cell {
     }
     public zeroClicked(): void {
         //reveal nearby zero cells and the boundary cells
+    }
+    public getImageAddress(): string {
+        return this.imageAddress;
     }
 }

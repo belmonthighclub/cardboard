@@ -2,10 +2,10 @@ import { Cell } from "./cells";
 const cellSide: number = 0; //SET //length of 1 side of cell
 const spaceBetweenCells: number = 0; //SET //length of space between adjacent sides of 2 cells
 export class Board {
-    public size: number = 0; //size of board (size x size)
-    public mines: number = 0; //# of mines on the board
-    public time: number = 0; //time left //SET COUNTDOWN
-    public cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()
+    private size: number = 0; //size of board (size x size)
+    private mines: number = 0; //# of mines on the board
+    private time: number = 0; //time left //SET COUNTDOWN
+    private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()
     constructor (size: number, mines: number, time: number) {
         this.mines = mines;
         this.size = size;
