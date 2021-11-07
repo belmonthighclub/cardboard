@@ -11,6 +11,18 @@ export class Board {
         this.size = size;
         this.time = time;
     }
+    public getMines(): number {
+        return this.mines;
+    }
+    public getTime(): number {
+        return this.time;
+    }
+    public getCells(): Cell[] {
+        return this.cells;
+    }
+    public disable(): void {
+        
+    }
     public createCells(): void {
         let mineLocations = new Map<number, number>();
         while (Object.keys(mineLocations).length < this.mines) {
