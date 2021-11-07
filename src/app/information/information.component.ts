@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { Board } from '../board/board';
-import { Cell } from '../board/cells';
 import { MinesLeft } from './minesLeft';
+import { PauseButton } from './pauseButton';
 import { Timer } from './timer';
 
 @Component({
@@ -13,11 +13,11 @@ import { Timer } from './timer';
 export class InformationComponent implements OnInit, OnDestroy {
   private timer: Timer;
   private subscription: Subscription = new Subscription();
-  private intervalId: number = 0;
   private mineCount: MinesLeft;
   private board: Board;
+  private pauseButton: PauseButton = new PauseButton();
   constructor(board: Board) {
-    this.timer = new Timer(board);
+    this.timer = new Timer();
     this.mineCount = new MinesLeft(board);
     this.board = board;
   }
@@ -29,17 +29,14 @@ export class InformationComponent implements OnInit, OnDestroy {
   
   public ngOnLoop() {
     //print out timer and mineCount
-    this.timer.decrement();
+    this.timer.increment();
     this.board.getCells().forEach(cell => {
-      if (cell.getIsMine() && !cell.getWasMine() && cell.getIsRevealed()) {
+      if (cell.getIsMine() && !cell.getWasMine() && cell.getIsMarked()) {
         this.mineCount.decrement();
         cell.setWasMine(true);
       }
     });
-    if (this.timer.getTimeLeft() <= 0) {
-      //gameOver();
-    }
-    else if (this.mineCount.getMinesLeft() == 0) {
+    if (this.mineCount.getMinesLeft() == 0) {
       //gameWon();
     }
     /*else if (*pause button is clicked*) {

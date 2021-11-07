@@ -4,18 +4,13 @@ const spaceBetweenCells: number = 0; //SET //length of space between adjacent si
 export class Board {
     private size: number = 0; //size of board (size x size)
     private mines: number = 0; //# of mines on the board
-    private time: number = 0; //time left //SET COUNTDOWN
     private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()
-    constructor (size: number, mines: number, time: number) {
+    constructor (size: number, mines: number) {
         this.mines = mines;
         this.size = size;
-        this.time = time;
     }
     public getMines(): number {
         return this.mines;
-    }
-    public getTime(): number {
-        return this.time;
     }
     public getCells(): Cell[] {
         return this.cells;

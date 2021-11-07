@@ -6,6 +6,7 @@ export class Cell {
     private x: number = 0; //column # of the cell (column 1 is 0)
     private y: number = 0; //row # of the cell (row 1 is 0)
     //creates Cell object, setting parameters to fields
+    private isMarked: boolean = false;
     private imageAddress: string = ""; //address (i think) to the image for a cell
     constructor(isMine: boolean, surroundingMines: number, x: number, y: number) {
         this.isMine = isMine;
@@ -62,9 +63,6 @@ export class Cell {
     public getIsMine(): boolean {
         return this.isMine;
     }
-    public getWasMine(): boolean {
-        return this.wasMine;
-    }
     public getX(): number {
         return this.x;
     }
@@ -74,10 +72,19 @@ export class Cell {
     public getIsRevealed(): boolean {
         return this.isRevealed;
     }
+    public setIsRevealed(isRevealed: boolean): void {
+        this.isRevealed = isRevealed;
+    }
+    public getWasMine(): boolean {
+        return this.wasMine;
+    }
     public setWasMine(wasMine: boolean): void {
         this.wasMine = wasMine;
     }
-    public setIsRevealed(isRevealed: boolean): void {
-        this.isRevealed = isRevealed;
+    public getIsMarked(): boolean {
+        return this.isMarked;
+    }
+    public setIsMarked(isMarked: boolean): void {
+        this.isMarked = isMarked;
     }
 }

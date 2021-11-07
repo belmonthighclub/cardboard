@@ -1,13 +1,10 @@
-import { Board } from "../board/board";
 export class Timer {
     private timeLeft: number = 0;
     private isPaused: boolean = false;
-    constructor(board: Board) {
-        this.timeLeft = board.getTime();
-    }
-    public decrement() {
-        if (!this.isPaused) {
-            this.timeLeft--;
+    private stoppedTimer: boolean = false;
+    public increment() {
+        if (!this.isPaused && !this.stoppedTimer) {
+            this.timeLeft++;
         }
     }
     public getTimeLeft(): number {
@@ -18,5 +15,8 @@ export class Timer {
     }
     public getIsPaused(): boolean {
         return this.isPaused;
+    }
+    public stopTimer(): void {
+        this.stoppedTimer = true;
     }
 }
