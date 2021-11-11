@@ -1,13 +1,16 @@
+const flagAddress: string  = "../../assets/mine.png"; //address to flag image
+
 export class Cell {
     private isMine: boolean = false; //is this cell a mine
-    private wasMine: boolean = false;
-    private isRevealed: boolean = false;
+    private wasMarked: boolean = false; //was marked last iteration (IN INFORMATION.COMPONENT.TS)
+    private isRevealed: boolean = false; //is the cell revealed
     private surroundingMines: number = 0; //# of surrounding mines, 1-8
     private x: number = 0; //column # of the cell (column 1 is 0)
     private y: number = 0; //row # of the cell (row 1 is 0)
     //creates Cell object, setting parameters to fields
-    private isMarked: boolean = false;
-    private imageAddress: string = ""; //address (i think) to the image for a cell
+    private isMarked: boolean = false; //is the cell marked as a mine
+    private imageAddress: string = ""; //address to the image for a cell
+
     constructor(isMine: boolean, surroundingMines: number, x: number, y: number) {
         this.isMine = isMine;
         this.surroundingMines = surroundingMines;
@@ -41,50 +44,56 @@ export class Cell {
             this.imageAddress = "../../assets/number8.png";
         }
     }
-    //if mine clicked
-    public isClicked(): void {
-        this.display();
-        if (this.isMine) {
-            //gameOver();
-        }
-        else if (this.surroundingMines == 0) {
-            this.zeroClicked();
-        }
+
+    public equals(cell: Cell): boolean { //returns if the cells are equal
+        return cell.getX() == this.x && cell.getY() == this.y;
     }
-    public display(): void {
-        //display imageAddress
+
+    public equalsPosition(x: number, y: number): boolean { //returns if the cell is in location (x,y)
+        return this.x == x && this.y == y;
     }
-    public zeroClicked(): void {
-        //reveal nearby zero cells and the boundary cells
-    }
-    public getImageAddress(): string {
+
+    public getImageAddress(): string { //getter method for imageAddress
         return this.imageAddress;
     }
-    public getIsMine(): boolean {
+
+    public getIsMine(): boolean { //getter method for isMine
         return this.isMine;
     }
-    public getX(): number {
+
+    public getX(): number { //getter method for x
         return this.x;
     }
-    public getY(): number {
+
+    public getY(): number { //getter method for y
         return this.y;
     }
-    public getIsRevealed(): boolean {
+
+    public getSurroundingMines(): number {
+        return this.surroundingMines;
+    }
+
+    public getIsRevealed(): boolean { //getter method for isRevealed
         return this.isRevealed;
     }
-    public setIsRevealed(isRevealed: boolean): void {
+
+    public setIsRevealed(isRevealed: boolean): void { //setter method for isRevealed
         this.isRevealed = isRevealed;
     }
-    public getWasMine(): boolean {
-        return this.wasMine;
+
+    public getWasMarked(): boolean { //getter method for wasMarked
+        return this.wasMarked;
     }
-    public setWasMine(wasMine: boolean): void {
-        this.wasMine = wasMine;
+
+    public setWasMarked(wasMarked: boolean): void { //setter method for wasMarked
+        this.wasMarked = wasMarked;
     }
-    public getIsMarked(): boolean {
+
+    public getIsMarked(): boolean { //getter method for isMarked
         return this.isMarked;
     }
-    public setIsMarked(isMarked: boolean): void {
+
+    public setIsMarked(isMarked: boolean): void { //setter method for isMarked
         this.isMarked = isMarked;
     }
 }

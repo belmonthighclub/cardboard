@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { Board } from '../board/board';
-import { MinesLeft } from './minesLeft';
+import { BoardComponent } from '../board/board.component';
+import { FlagsLeft } from './flagsLeft';
 import { PauseButton } from './pauseButton';
 import { Timer } from './timer';
 
@@ -10,41 +11,49 @@ import { Timer } from './timer';
   templateUrl: './information.component.html',
   styleUrls: ['./information.component.css']
 })
+
 export class InformationComponent implements OnInit, OnDestroy {
-  private timer: Timer;
-  private subscription: Subscription = new Subscription();
-  private mineCount: MinesLeft;
-  private board: Board;
-  private pauseButton: PauseButton = new PauseButton();
-  constructor(board: Board) {
-    this.timer = new Timer();
-    this.mineCount = new MinesLeft(board);
-    this.board = board;
+  private timer: Timer; //Timer object for the component; recieved from BoardComponent
+  private subscription: Subscription = new Subscription(); //used to loop a method
+  private flagCount: FlagsLeft; //FlagsLeft object for the component
+  private board: Board; //Board object for the component; recieved from BoardComponent
+  private pauseButton: PauseButton = new PauseButton(); //PauseButton object for the component
+
+  constructor(boardComponent: BoardComponent) {
+    this.board = boardComponent.getBoard();
+    this.timer = boardComponent.getTimer();
+    this.flagCount = new FlagsLeft(this.board);
   }
 
-  ngOnInit(): void { //start method
+  ngOnInit(): void { //runs on initialization
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.ngOnLoop());
   }
   
-  public ngOnLoop() {
-    //print out timer and mineCount
-    this.timer.increment();
+  public ngOnLoop() { //runs every second
+    //print out timer and flagCount
+    if (!this.timer.getIsPaused()) {
+      this.timer.increment();
+    }
+    let gameWon: boolean = true;
     this.board.getCells().forEach(cell => {
-      if (cell.getIsMine() && !cell.getWasMine() && cell.getIsMarked()) {
-        this.mineCount.decrement();
-        cell.setWasMine(true);
+      if (!cell.getWasMarked() && cell.getIsMarked()) {
+        this.flagCount.decrement();
+        cell.setWasMarked(true);
+      }
+      if (!cell.getIsRevealed() && !cell.getIsMine) {
+        gameWon = false;
       }
     });
-    if (this.mineCount.getMinesLeft() == 0) {
+    if (gameWon) {
       //gameWon();
     }
-    /*else if (*pause button is clicked*) {
+    /*else if (pauseButton.getPaused()) {
       this.timer.setIsPaused(true);
     }*/
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy(): void { //runs when destroyed
     this.subscription && this.subscription.unsubscribe();
   }
 }

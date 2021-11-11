@@ -1,22 +1,27 @@
 export class Timer {
-    private timeLeft: number = 0;
-    private isPaused: boolean = false;
-    private stoppedTimer: boolean = false;
-    public increment() {
+    private time: number = 0; //amount of time that has passed
+    private isPaused: boolean = false; //if the game is paused
+    private stoppedTimer: boolean = false; //if the timer is stopped, cannot resume
+
+    public increment(): void { //increases time
         if (!this.isPaused && !this.stoppedTimer) {
-            this.timeLeft++;
+            this.time++;
         }
     }
-    public getTimeLeft(): number {
-        return this.timeLeft;
+
+    public getTime(): number { //getter method for time
+        return this.time;
     }
-    public setIsPaused(isPaused: boolean): void {
-        this.isPaused = isPaused;
-    }
-    public getIsPaused(): boolean {
+    
+    public getIsPaused(): boolean { //getter method for isPaused
         return this.isPaused;
     }
-    public stopTimer(): void {
+    
+    public setIsPaused(isPaused: boolean): void { //setter method for isPaused
+        this.isPaused = isPaused;
+    }
+    
+    public stopTimer(): void { //stops timer
         this.stoppedTimer = true;
     }
 }
