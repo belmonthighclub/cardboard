@@ -1,10 +1,8 @@
-import { Board } from "../board/board";
-
 export class FlagsLeft {
     private flagsLeft: number = 0; //number of flags left to place on cells
 
-    constructor(board: Board) {
-        this.flagsLeft = board.getMines();
+    constructor(mines: number) {
+        this.flagsLeft = mines;
     }
 
     public decrement(): void { //decrease flagsLeft by 1

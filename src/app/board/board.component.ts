@@ -29,10 +29,10 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void { //runs on initialization
     const source = interval(1000);
-    this.subscription = source.subscribe(val => this.ngOnLoop());
+    this.subscription = source.subscribe(val => this.loop());
   }
 
-  ngOnLoop(): void { //runs every second
+  private loop(): void { //runs every second
     //display cells and image on top (if displayed)
     if (this.board.getInteract()) {
       //if cell is clicked, run here

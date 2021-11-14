@@ -7,7 +7,6 @@ export class Cell {
     private surroundingMines: number = 0; //# of surrounding mines, 1-8
     private x: number = 0; //column # of the cell (column 1 is 0)
     private y: number = 0; //row # of the cell (row 1 is 0)
-    //creates Cell object, setting parameters to fields
     private isMarked: boolean = false; //is the cell marked as a mine
     private imageAddress: string = ""; //address to the image for a cell
 
@@ -45,11 +44,19 @@ export class Cell {
         }
     }
 
-    public equals(cell: Cell): boolean { //returns if the cells are equal
+    public displayFlag(): void {
+        //display flag image
+    }
+
+    public displayImage(): void {
+        //display imageAddress image
+    }
+
+    public equals(cell: Cell): boolean { //returns if cell and this are equal
         return cell.getX() == this.x && cell.getY() == this.y;
     }
 
-    public equalsPosition(x: number, y: number): boolean { //returns if the cell is in location (x,y)
+    public equalsPosition(x: number, y: number): boolean { //returns if this is in location (x,y)
         return this.x == x && this.y == y;
     }
 
@@ -69,7 +76,7 @@ export class Cell {
         return this.y;
     }
 
-    public getSurroundingMines(): number {
+    public getSurroundingMines(): number { //getter method for surroundingMines
         return this.surroundingMines;
     }
 

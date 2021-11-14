@@ -24,4 +24,10 @@ export class Timer {
     public stopTimer(): void { //stops timer
         this.stoppedTimer = true;
     }
+
+    public restartGame(): void { //resets timer
+        this.time = 0;
+        this.isPaused = false;
+        this.stoppedTimer = false;
+    }
 }

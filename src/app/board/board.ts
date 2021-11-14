@@ -15,9 +15,9 @@ export class Board {
         this.createCells();
     }
     
-    public isLeftClicked(cell: Cell): void { //runs when the cell is left-clicked //NEED TO RECREATE
+    public isLeftClicked(cell: Cell): void { //runs when the cell is left-clicked
         if (cell.getIsMine()) {
-            //display imageAddress
+            cell.displayImage();
             //gameOver();
         }
         else if (cell.getIsRevealed()) {
@@ -27,14 +27,14 @@ export class Board {
             this.zeroClicked(cell);
         }
         else {
-            //display imageAddress
+            cell.displayImage();
         }
     }
 
     public isRightClicked(cell: Cell): void { //runs when the cell is right-clicked
         let flagsLeft: boolean = true; //set this
         if (flagsLeft) {
-            //display flag image
+            cell.displayFlag();
         }
     }
 
