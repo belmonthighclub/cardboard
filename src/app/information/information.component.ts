@@ -13,16 +13,14 @@ import { Timer } from './timer';
 })
 
 export class InformationComponent implements OnInit, OnDestroy {
-  private timer: Timer; //Timer object for the component; recieved from BoardComponent
+  private boardComponent: BoardComponent = new BoardComponent(); //find a way to get this
+  private timer: Timer = this.boardComponent.getTimer(); //Timer object for the component; recieved from BoardComponent
   private subscription: Subscription = new Subscription(); //used to loop a method
-  private flagCount: FlagsLeft; //FlagsLeft object for the component
-  private board: Board; //Board object for the component; recieved from BoardComponent
+  private board: Board = this.boardComponent.getBoard(); //Board object for the component; recieved from BoardComponent
+  private flagCount: FlagsLeft = new FlagsLeft(this.board); //FlagsLeft object for the component
   private pauseButton: PauseButton = new PauseButton(); //PauseButton object for the component
 
-  constructor(boardComponent: BoardComponent) {
-    this.board = boardComponent.getBoard();
-    this.timer = boardComponent.getTimer();
-    this.flagCount = new FlagsLeft(this.board);
+  constructor() {
   }
 
   ngOnInit(): void { //runs on initialization
@@ -30,7 +28,7 @@ export class InformationComponent implements OnInit, OnDestroy {
     this.subscription = source.subscribe(val => this.ngOnLoop());
   }
   
-  public ngOnLoop() { //runs every second
+  ngOnLoop(): void { //runs every second
     //print out timer and flagCount
     if (!this.timer.getIsPaused()) {
       this.timer.increment();
