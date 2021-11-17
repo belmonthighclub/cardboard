@@ -18,7 +18,7 @@ export class PauseButton {
         }
     }
 
-    public setImage(image: string): void { //displays button image
+    private setImage(image: string): void { //displays button image; only used in togglePause()
 
     }
 
