@@ -7,17 +7,19 @@ export class Board {
     private canInteract: boolean = true; //can interact with the board; directly related to pause button
     private size: number = 0; //size of board (size x size)
     private mines: number = 0; //# of mines on the board
-    private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()
+    private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()\
+    private boardWidth: number;
 
     constructor (size: number, mines: number) {
         this.mines = mines;
         this.size = size;
+        this.boardWidth = size * (cellSide + spaceBetweenCells) + spaceBetweenCells;
         this.createCells();
     }
     
     public isLeftClicked(cell: Cell): void { //runs when the cell is left-clicked
         if (cell.getIsMine()) {
-            cell.displayImage();
+            cell.setIsRevealed(true);
             //gameOver();
         }
         else if (cell.getIsRevealed()) {
@@ -27,18 +29,18 @@ export class Board {
             this.zeroClicked(cell);
         }
         else {
-            cell.displayImage();
+            cell.setIsRevealed(true);
         }
     }
 
     public isRightClicked(cell: Cell): void { //runs when the cell is right-clicked
         let flagsLeft: boolean = true; //set this
         if (flagsLeft) {
-            cell.displayFlag();
+            cell.setIsMarked(true);
         }
     }
 
-    public zeroClicked(cell: Cell): void { //runs when all surrounding cells are not mines; creates ripple effect
+    private zeroClicked(cell: Cell): void { //runs when all surrounding cells are not mines; creates ripple effect; only called in isLeftClicked()
         this.cells.forEach(otherCell => {
             if (otherCell.equalsPosition(cell.getX() - 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() - 1, cell.getY()) || otherCell.equalsPosition(cell.getX() - 1, cell.getY() + 1) || otherCell.equalsPosition(cell.getX(), cell.getY() - 1) || otherCell.equalsPosition(cell.getX(), cell.getY() + 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY()) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() + 1)) { //this if finds all 8 surrounding cells and sends them through the isLeftClicked method
                 this.isLeftClicked(otherCell);
@@ -66,7 +68,7 @@ export class Board {
         this.canInteract = true;
     }
 
-    public createCells(): void { //creates cell array; is called in constructor
+    private createCells(): void { //creates cell array; only called in constructor
         let mineLocations = new Map<number, number>();
         while (Object.keys(mineLocations).length < this.mines) {
             let mineX: number = Math.random() * this.size;
@@ -89,29 +91,31 @@ export class Board {
                     if (pair[0] == x && pair[1] == y) {
                         isMine = true;
                     }
-                    if (pair[0] == x - 1 && pair[1] == y - 1) {
-                        nearbyMines++;
-                    }
-                    if (pair[0] == x && pair[1] == y - 1) {
-                        nearbyMines++;
-                    }
-                    if (pair[0] == x + 1 && pair[1] == y - 1) {
-                        nearbyMines++;
-                    }
-                    if (pair[0] == x - 1 && pair[1] == y) {
-                        nearbyMines++;
-                    }
-                    if (pair[0] == x + 1 && pair[1] == y) {
-                        nearbyMines++;
-                    }
-                    if (pair[0] == x - 1 && pair[1] == y + 1) {
-                        nearbyMines++;
-                    }
-                    if (pair[0] == x && pair[1] == y + 1) {
-                        nearbyMines++;
-                    }
-                    if (pair[0] == x + 1 && pair[1] == y + 1) {
-                        nearbyMines++;
+                    else {
+                        if (pair[0] == x - 1 && pair[1] == y - 1) {
+                            nearbyMines++;
+                        }
+                        if (pair[0] == x && pair[1] == y - 1) {
+                            nearbyMines++;
+                        }
+                        if (pair[0] == x + 1 && pair[1] == y - 1) {
+                            nearbyMines++;
+                        }
+                        if (pair[0] == x - 1 && pair[1] == y) {
+                            nearbyMines++;
+                        }
+                        if (pair[0] == x + 1 && pair[1] == y) {
+                            nearbyMines++;
+                        }
+                        if (pair[0] == x - 1 && pair[1] == y + 1) {
+                            nearbyMines++;
+                        }
+                        if (pair[0] == x && pair[1] == y + 1) {
+                            nearbyMines++;
+                        }
+                        if (pair[0] == x + 1 && pair[1] == y + 1) {
+                            nearbyMines++;
+                        }
                     }
                 }
                 this.cells.push(new Cell(isMine, nearbyMines, x, y));

@@ -44,12 +44,22 @@ export class Cell {
         }
     }
 
-    public displayFlag(): void {
+    private displayFlag(x: number, y: number, sideLength: number): void { //draws flag if applicable; only used in drawCell()
         //display flag image
     }
 
-    public displayImage(): void {
+    private displayImage(x: number, y: number, sideLength: number): void { //draws imageAddress if applicable; only used in drawCell()
         //display imageAddress image
+    }
+
+    public drawCell(x: number, y: number, sideLength: number): void { //draws cell
+        //draw cell
+        if (this.isRevealed) {
+            this.displayImage(x, y, sideLength);
+        }
+        else if (this.isMarked) {
+            this.displayFlag(x, y, sideLength);
+        }
     }
 
     public equals(cell: Cell): boolean { //returns if cell and this are equal

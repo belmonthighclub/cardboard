@@ -1,4 +1,8 @@
 <app-information [board] = "getBoard()" [timer] = "getTimer()"></app-information>
 <p>Board Goes Here</p>
 
+<!--<div id = "cells" *ngFor = "let cell of board.cells">
+    <span class = "cells" (contextmenu) = "board.isRightClicked(cell)" (click) = "board.isLeftClicked(cell)"><img *ngIf = "cell.isRevealed"></span>
+</div>-->
+
 <!-- <body> </body> -->
