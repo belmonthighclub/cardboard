@@ -22,7 +22,7 @@ export class InformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void { //runs on initialization
-    const source = interval(1000);3
+    const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());
     if (this.board) {
       this.flagCount = new FlagsLeft(this.board.getMines());
@@ -33,12 +33,12 @@ export class InformationComponent implements OnInit, OnDestroy {
     //print out timer and flagCount
     this.timer?.increment();
     let gameWon: boolean = true;
-    this.board?.cells.forEach(cell => {
+    this.board?.getCells().forEach(cell => {
       if (!cell.getWasMarked() && cell.getIsMarked()) {
         this.flagCount.decrement();
         cell.setWasMarked(true);
       }
-      if (!cell.isRevealed && !cell.getIsMine()) {
+      if (!cell.getIsRevealed() && !cell.getIsMine) {
         gameWon = false;
       }
     });
