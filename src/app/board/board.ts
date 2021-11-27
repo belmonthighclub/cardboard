@@ -7,9 +7,14 @@ export class Board {
     private canInteract: boolean = true; //can interact with the board; directly related to pause button
     private size: number = 0; //size of board (size x size)
     private mines: number = 0; //# of mines on the board
-    private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()\
-    private boardWidth: number;
+    private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()
+    private boardWidth: number; //can be used?
 
+    /**
+     * Creates board object
+     * @param size amount of cells on one side of board
+     * @param mines amount of mine cells on the board
+     */
     constructor (size: number, mines: number) {
         this.mines = mines;
         this.size = size;
@@ -17,7 +22,11 @@ export class Board {
         this.createCells();
     }
     
-    public isLeftClicked(cell: Cell): void { //runs when the cell is left-clicked
+    /**
+     * Runs when the cell is left-clicked
+     * @param cell cell object the function is running on
+     */
+    public isLeftClicked(cell: Cell): void {
         if (cell.getIsMine()) {
             cell.setIsRevealed(true);
             //gameOver();
@@ -28,19 +37,25 @@ export class Board {
         else if (cell.getSurroundingMines() == 0) {
             this.zeroClicked(cell);
         }
-        else {
-            cell.setIsRevealed(true);
-        }
+        cell.setIsRevealed(true);
     }
 
-    public isRightClicked(cell: Cell): void { //runs when the cell is right-clicked
+    /**
+     * Runs when the cell is right-clicked
+     * @param cell cell object the function is running on
+     */
+    public isRightClicked(cell: Cell): void {
         let flagsLeft: boolean = true; //set this
         if (flagsLeft) {
             cell.setIsMarked(true);
         }
     }
 
-    private zeroClicked(cell: Cell): void { //runs when all surrounding cells are not mines; creates ripple effect; only called in isLeftClicked()
+    /**
+     * Runs when all surrounding cells are not mines; creates ripple effect; only called in isLeftClicked()
+     * @param cell cell object the function is running on
+     */
+    private zeroClicked(cell: Cell): void {
         this.cells.forEach(otherCell => {
             if (otherCell.equalsPosition(cell.getX() - 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() - 1, cell.getY()) || otherCell.equalsPosition(cell.getX() - 1, cell.getY() + 1) || otherCell.equalsPosition(cell.getX(), cell.getY() - 1) || otherCell.equalsPosition(cell.getX(), cell.getY() + 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY()) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() + 1)) { //this if finds all 8 surrounding cells and sends them through the isLeftClicked method
                 this.isLeftClicked(otherCell);

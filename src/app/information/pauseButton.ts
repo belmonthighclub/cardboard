@@ -8,6 +8,8 @@ export class PauseButton {
     private width: number = 0; //width of button
     private height: number = 0; //height of button
 
+    //no constructor because no inputted values
+
     public togglePause(): void { //toggles pause button image and paused
         this.paused = !this.paused;
         if (this.paused) {
@@ -18,6 +20,10 @@ export class PauseButton {
         }
     }
 
+    /**
+     * displays the image based on inputted address
+     * @param image address for to be displayed image
+     */
     private setImage(image: string): void { //displays button image; only used in togglePause()
 
     }

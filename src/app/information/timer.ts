@@ -3,6 +3,8 @@ export class Timer {
     private isPaused: boolean = false; //if the game is paused
     private stoppedTimer: boolean = false; //if the timer is stopped, cannot resume
 
+    //no constructor because no inputted values
+
     public increment(): void { //increases time
         if (!this.isPaused && !this.stoppedTimer) {
             this.time++;
@@ -27,7 +29,7 @@ export class Timer {
 
     public restartGame(): void { //resets timer
         this.time = 0;
-        this.isPaused = false;
+        this.isPaused = true;
         this.stoppedTimer = false;
     }
 }

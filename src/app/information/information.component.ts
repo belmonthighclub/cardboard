@@ -12,9 +12,9 @@ import { Timer } from './timer';
 })
 
 export class InformationComponent implements OnInit, OnDestroy {
-  @Input() public timer: Timer | null = null; //Timer object for the component; recieved from BoardComponent
+  @Input() public timer?: Timer; //Timer object for the component; recieved from BoardComponent
   private subscription: Subscription = new Subscription(); //used to loop a method
-  @Input() public board: Board | null = null; //Board object for the component; recieved from BoardComponent
+  @Input() public board?: Board; //Board object for the component; recieved from BoardComponent
   private flagCount!: FlagsLeft; //FlagsLeft object for the component
   private pauseButton: PauseButton = new PauseButton(); //PauseButton object for the component
 
@@ -27,27 +27,32 @@ export class InformationComponent implements OnInit, OnDestroy {
     if (this.board) {
       this.flagCount = new FlagsLeft(this.board.getMines());
     }
+    else {
+      this.flagCount = new FlagsLeft(5);
+    }
   }
   
   private loop(): void { //runs every second
     //print out timer and flagCount
     this.timer?.increment();
-    let gameWon: boolean = true;
+    let gameWon: boolean = false;
     this.board?.getCells().forEach(cell => {
-      if (!cell.getWasMarked() && cell.getIsMarked()) {
+      if (!cell.getWasMarked() && cell.getIsMarked() && this.flagCount.getFlagsLeft() > 0) {
         this.flagCount.decrement();
         cell.setWasMarked(true);
       }
-      if (!cell.getIsRevealed() && !cell.getIsMine) {
-        gameWon = false;
+      else if (cell.getWasMarked() && !cell.getIsMarked()) {
+        this.flagCount.increment();
+        cell.setWasMarked(false);
       }
     });
     if (gameWon) {
       //gameWon();
+      this.timer?.stopTimer();
     }
-    /*else if (pauseButton.getPaused()) {
-      this.timer.setIsPaused(true);
-    }*/
+    else if (this.pauseButton.getPaused()) {
+      this.timer?.setIsPaused(true);
+    }
   }
 
   ngOnDestroy(): void { //runs when destroyed

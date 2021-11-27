@@ -10,13 +10,13 @@ import { Board } from './board';
 })
 
 export class BoardComponent implements OnInit, OnDestroy {
-  @Input() public cellsPerRow?: number; //find a way to get this
-  @Input() public mines?: number; //find a way to get this
+  @Input() private cellsPerRow?: number; //find a way to get this
+  @Input() private mines?: number; //find a way to get this
   private board?: Board; //Board object for the component
   private subscription: Subscription = new Subscription(); //used to loop a method
   private timer: Timer = new Timer(); //Timer object for the component
 
-  constructor() {
+  constructor() { //unused
   }
 
   public getTimer(): Timer { //getter method for timer

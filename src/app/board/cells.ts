@@ -10,6 +10,14 @@ export class Cell {
     private isMarked: boolean = false; //is the cell marked as a mine
     private imageAddress: string = ""; //address to the image for a cell
 
+    /**
+     * Creates cell object
+     * @param isMine if this cell is a mine
+     * @param surroundingMines how many mines surround the cell, is 0 if the cell is a mine
+     * @param x the column the cell is on, starts at 0
+     * @param y the row the cell is on, starts at 0
+     * !!x and y are based on coordinate plan!!
+     */
     constructor(isMine: boolean, surroundingMines: number, x: number, y: number) {
         this.isMine = isMine;
         this.surroundingMines = surroundingMines;
