@@ -38,6 +38,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());
+    console.log(this.getBoard().getCells())
   }
 
   private loop(): void { //runs every second

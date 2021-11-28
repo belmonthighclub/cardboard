@@ -5,8 +5,8 @@ const spaceBetweenCells: number = 0; //SET //length of space between adjacent si
 
 export class Board {
     private canInteract: boolean = true; //can interact with the board; directly related to pause button
-    private size: number = 0; //size of board (size x size)
-    private mines: number = 0; //# of mines on the board
+    private size: number; //size of board (size x size)
+    private mines: number; //# of mines on the board
     private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()
     private boardWidth: number; //can be used?
 

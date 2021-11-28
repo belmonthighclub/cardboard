@@ -1,4 +1,4 @@
-const flagAddress: string  = "../../assets/mine.png"; //address to flag image
+const flagAddress: string  = "../../assets/flag.png"; //address to flag image
 
 export class Cell {
     private isMine: boolean = false; //is this cell a mine
