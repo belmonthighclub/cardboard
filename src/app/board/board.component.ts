@@ -28,13 +28,16 @@ export class BoardComponent implements OnInit, OnDestroy {
       return this.board;
     }
     else {
-      return new Board(0, 0);
+      return new Board(5, 5);
     }
   }
 
   ngOnInit(): void { //runs on initialization
     if (this.cellsPerRow && this.mines) {
       this.board = new Board(this.cellsPerRow, this.mines);
+    }
+    else {
+      this.board = new Board(7, 7);
     }
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());

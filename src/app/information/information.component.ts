@@ -36,16 +36,18 @@ export class InformationComponent implements OnInit, OnDestroy {
     //print out timer and flagCount
     this.timer?.increment();
     let gameWon: boolean = false;
-    this.board?.getCells().forEach(cell => {
-      if (!cell.getWasMarked() && cell.getIsMarked() && this.flagCount.getFlagsLeft() > 0) {
-        this.flagCount.decrement();
-        cell.setWasMarked(true);
-      }
-      else if (cell.getWasMarked() && !cell.getIsMarked()) {
-        this.flagCount.increment();
-        cell.setWasMarked(false);
-      }
-    });
+    this.board?.getCells().forEach(row => {
+      row.forEach(cell => {
+        if (!cell.getWasMarked() && cell.getIsMarked() && this.flagCount.getFlagsLeft() > 0) {
+          this.flagCount.decrement();
+          cell.setWasMarked(true);
+        }
+        else if (cell.getWasMarked() && !cell.getIsMarked()) {
+          this.flagCount.increment();
+          cell.setWasMarked(false);
+        }
+      });
+  });
     if (gameWon) {
       //gameWon();
       this.timer?.stopTimer();
