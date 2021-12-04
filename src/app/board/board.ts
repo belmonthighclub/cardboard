@@ -7,7 +7,7 @@ export class Board {
     private canInteract: boolean = true; //can interact with the board; directly related to pause button
     private size: number; //size of board (size x size)
     private mines: number; //# of mines on the board
-    private cells: Cell[] = new Array(); //array of all cells on board //DECLARED IN createCells()
+    private cells: Cell[][] = []; //2d array of all cells on board //DECLARED IN createCells()
     private boardWidth: number; //can be used?
 
     /**
@@ -56,10 +56,12 @@ export class Board {
      * @param cell cell object the function is running on
      */
     private zeroClicked(cell: Cell): void {
-        this.cells.forEach(otherCell => {
-            if (otherCell.equalsPosition(cell.getX() - 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() - 1, cell.getY()) || otherCell.equalsPosition(cell.getX() - 1, cell.getY() + 1) || otherCell.equalsPosition(cell.getX(), cell.getY() - 1) || otherCell.equalsPosition(cell.getX(), cell.getY() + 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY()) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() + 1)) { //this if finds all 8 surrounding cells and sends them through the isLeftClicked method
-                this.isLeftClicked(otherCell);
-            }
+        this.cells.forEach(row => {
+            row.forEach(otherCell => {
+                if (otherCell.equalsPosition(cell.getX() - 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() - 1, cell.getY()) || otherCell.equalsPosition(cell.getX() - 1, cell.getY() + 1) || otherCell.equalsPosition(cell.getX(), cell.getY() - 1) || otherCell.equalsPosition(cell.getX(), cell.getY() + 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY()) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() + 1)) { //this if statement finds all 8 surrounding cells and sends them through the isLeftClicked() method
+                    this.isLeftClicked(otherCell);
+                }
+            });
         });
     }
 
@@ -67,8 +69,12 @@ export class Board {
         return this.mines;
     }
 
-    public getCells(): Cell[] { //getter method for cell array
+    public getCells(): Cell[][] { //getter method for cell array
         return this.cells;
+    }
+
+    public getSize(): number {
+        return this.size;
     }
 
     public getInteract(): boolean { //getter method for interact
@@ -84,56 +90,63 @@ export class Board {
     }
 
     private createCells(): void { //creates cell array; only called in constructor
-        let mineLocations = new Map<number, number>();
-        while (Object.keys(mineLocations).length < this.mines) {
-            let mineX: number = Math.random() * this.size;
-            let mineY: number  = Math.random() * this.size;
+        let mineLocationsX: number[] = new Array();
+        let mineLocationsY: number[] = new Array();
+        while (mineLocationsX.length < this.mines) {
+            let mineX: number = Math.floor(Math.random() * this.size);
+            let mineY: number  = Math.floor(Math.random() * this.size);
             let repeat: boolean = false;
-            for (const pair of mineLocations) {
-                if (pair[0] == mineX && pair[1] == mineY) {
+            for (let i = 0; i < mineLocationsX.length; i++) {
+                const x = mineLocationsX[i];
+                const y = mineLocationsY[i];
+                if (x == mineX && y == mineY) {
                     repeat = true;
                 }
             }
-            if (repeat) {
-                mineLocations.set(mineX, mineY);
+            if (!repeat) {
+                mineLocationsX.push(mineX);
+                mineLocationsY.push(mineY);
             }
         }
-        for (let x = 0; x < this.size; x++) {
-            for (let y = 0; y < this.size; y++) {
+        for (let y = 0; y < this.size; y++) {
+            this.cells[y] = [];
+            for (let x = 0; x < this.size; x++) {
                 let nearbyMines: number = 0;
                 let isMine: boolean = false;
-                for (const pair of mineLocations) {
-                    if (pair[0] == x && pair[1] == y) {
+                for (let i = 0; i < mineLocationsX.length; i++) {
+                    const mineX = mineLocationsX[i];
+                    const mineY = mineLocationsY[i];
+                    if (mineX == x && mineY == y) {
                         isMine = true;
                     }
                     else {
-                        if (pair[0] == x - 1 && pair[1] == y - 1) {
+                        if (mineX == x - 1 && mineY == y - 1) {
                             nearbyMines++;
                         }
-                        if (pair[0] == x && pair[1] == y - 1) {
+                        if (mineX == x && mineY == y - 1) {
                             nearbyMines++;
                         }
-                        if (pair[0] == x + 1 && pair[1] == y - 1) {
+                        if (mineX == x + 1 && mineY == y - 1) {
                             nearbyMines++;
                         }
-                        if (pair[0] == x - 1 && pair[1] == y) {
+                        if (mineX == x - 1 && mineY == y) {
                             nearbyMines++;
                         }
-                        if (pair[0] == x + 1 && pair[1] == y) {
+                        if (mineX == x + 1 && mineY == y) {
                             nearbyMines++;
                         }
-                        if (pair[0] == x - 1 && pair[1] == y + 1) {
+                        if (mineX == x - 1 && mineY == y + 1) {
                             nearbyMines++;
                         }
-                        if (pair[0] == x && pair[1] == y + 1) {
+                        if (mineX == x && mineY == y + 1) {
                             nearbyMines++;
                         }
-                        if (pair[0] == x + 1 && pair[1] == y + 1) {
+                        if (mineX == x + 1 && mineY == y + 1) {
                             nearbyMines++;
                         }
                     }
                 }
-                this.cells.push(new Cell(isMine, nearbyMines, x, y));
+                this.cells[y][x] = new Cell(isMine, nearbyMines, x, y); //this.cells[y][x] is the same thing as this.cells[rows][columns], because of my stupid brain
             }
         }
     }

@@ -3,12 +3,12 @@ const flagAddress: string  = "../../assets/flag.png"; //address to flag image
 export class Cell {
     private isMine: boolean = false; //is this cell a mine
     private wasMarked: boolean = false; //was marked last iteration (IN INFORMATION.COMPONENT.TS)
-    private isRevealed: boolean = false; //is the cell revealed
+    private isRevealed: boolean = true; //is the cell revealed
     private surroundingMines: number = 0; //# of surrounding mines, 1-8
     private x: number = 0; //column # of the cell (column 1 is 0)
     private y: number = 0; //row # of the cell (row 1 is 0)
     private isMarked: boolean = false; //is the cell marked as a mine
-    private imageAddress: string = ""; //address to the image for a cell
+    private imageAddress: string; //address to the image for a cell
 
     /**
      * Creates cell object
@@ -16,39 +16,44 @@ export class Cell {
      * @param surroundingMines how many mines surround the cell, is 0 if the cell is a mine
      * @param x the column the cell is on, starts at 0
      * @param y the row the cell is on, starts at 0
-     * !!x and y are based on coordinate plan!!
+     * !!x and y are based on coordinate plane!!
      */
     constructor(isMine: boolean, surroundingMines: number, x: number, y: number) {
         this.isMine = isMine;
         this.surroundingMines = surroundingMines;
         this.x = x;
         this.y = y;
+        switch (surroundingMines) {
+            case 1:
+                this.imageAddress = "../../assets/number1.png";
+                break;
+            case 2:
+                this.imageAddress = "../../assets/number2.png";
+                break;
+            case 3:
+                this.imageAddress = "../../assets/number3.png";
+                break;
+            case 4:
+                this.imageAddress = "../../assets/number4.png";
+                break;
+            case 5:
+                this.imageAddress = "../../assets/number5.png";
+                break;
+            case 6:
+                this.imageAddress = "../../assets/number6.png";
+                break;
+            case 7:
+                this.imageAddress = "../../assets/number7.png";
+                break;
+            case 8:
+                this.imageAddress = "../../assets/number8.png";
+                break;
+            default:
+                this.imageAddress = "../../assets/number0.png";
+                break;
+        }
         if (isMine) {
             this.imageAddress = "../../assets/mine.png";
-        }
-        else if (surroundingMines == 1) {
-            this.imageAddress = "../../assets/number1.png";
-        }
-        else if (surroundingMines == 2) {
-            this.imageAddress = "../../assets/number2.png";
-        }   
-        else if (surroundingMines == 3) {
-            this.imageAddress = "../../assets/number3.png";
-        }
-        else if (surroundingMines == 4) {
-            this.imageAddress = "../../assets/number4.png";
-        }
-        else if (surroundingMines == 5) {
-            this.imageAddress = "../../assets/number5.png";
-        }
-        else if (surroundingMines == 6) {
-            this.imageAddress = "../../assets/number6.png";
-        }
-        else if (surroundingMines == 7) {
-            this.imageAddress = "../../assets/number7.png";
-        }
-        else if (surroundingMines == 8) {
-            this.imageAddress = "../../assets/number8.png";
         }
     }
 
