@@ -12,7 +12,7 @@
         <div class = "cellsInRows" *ngFor = "let cell of row">
             <span class = "cells" (contextmenu) = "getBoard().isRightClicked(cell)" (click) = "getBoard().isLeftClicked(cell)">
                 <img *ngIf = "cell.getIsRevealed()" [attr.src] = "cell.getImageAddress()">
-                <img id = "blank" *ngIf = "!cell.getIsRevealed() && !cell.getIsMarked()" src = "../../assets/Archive/arch1/number0.png">
+                <img id = "blank" *ngIf = "!cell.getIsRevealed() && !cell.getIsMarked()" src = "../../assets/number0.png">
                 <img *ngIf = "cell.getIsMarked() && !cell.getIsRevealed()" src = "../../assets/flag.png">
             </span>
         </div>
