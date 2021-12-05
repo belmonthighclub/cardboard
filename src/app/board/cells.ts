@@ -3,7 +3,7 @@ const flagAddress: string  = "../../assets/flag.png"; //address to flag image
 export class Cell {
     private isMine: boolean = false; //is this cell a mine
     private wasMarked: boolean = false; //was marked last iteration (IN INFORMATION.COMPONENT.TS)
-    private isRevealed: boolean = true; //is the cell revealed
+    private isRevealed: boolean = false; //is the cell revealed
     private surroundingMines: number = 0; //# of surrounding mines, 1-8
     private x: number = 0; //column # of the cell (column 1 is 0)
     private y: number = 0; //row # of the cell (row 1 is 0)

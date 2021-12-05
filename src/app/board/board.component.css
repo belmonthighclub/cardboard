@@ -6,7 +6,9 @@
 }
 img {
     background-color: limegreen;
-    border-color:limegreen;
+}
+#blank {
+    background-color: aqua;
 }
 .rows {
     display: flex;

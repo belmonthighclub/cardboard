@@ -1,5 +1,4 @@
 <app-information [board] = "getBoard()" [timer] = "getTimer()"></app-information>
-<p>Board Goes Here</p>
 
 <!--<div id = "board" *ngFor = "let cell of getBoard().getCells()">
     <span class = "cells" (contextmenu) = "getBoard().isRightClicked(cell)" (click) = "getBoard().isLeftClicked(cell)">
@@ -13,7 +12,8 @@
         <div class = "cellsInRows" *ngFor = "let cell of row">
             <span class = "cells" (contextmenu) = "getBoard().isRightClicked(cell)" (click) = "getBoard().isLeftClicked(cell)">
                 <img *ngIf = "cell.getIsRevealed()" [attr.src] = "cell.getImageAddress()">
-                <img *ngIf = "cell.getIsMarked()" src = "../../assets/flag.png">
+                <img id = "blank" *ngIf = "!cell.getIsRevealed() && !cell.getIsMarked()" src = "../../assets/number0.png">
+                <img *ngIf = "cell.getIsMarked() && !cell.getIsRevealed()" src = "../../assets/flag.png">
             </span>
         </div>
     </div>

@@ -15,7 +15,6 @@ export class InformationComponent implements OnInit, OnDestroy {
   @Input() public timer?: Timer; //Timer object for the component; recieved from BoardComponent
   private subscription: Subscription = new Subscription(); //used to loop a method
   @Input() public board?: Board; //Board object for the component; recieved from BoardComponent
-  private flagCount!: FlagsLeft; //FlagsLeft object for the component
   private pauseButton: PauseButton = new PauseButton(); //PauseButton object for the component
 
   constructor() {
@@ -24,12 +23,6 @@ export class InformationComponent implements OnInit, OnDestroy {
   ngOnInit(): void { //runs on initialization
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());
-    if (this.board) {
-      this.flagCount = new FlagsLeft(this.board.getMines());
-    }
-    else {
-      this.flagCount = new FlagsLeft(5);
-    }
   }
   
   private loop(): void { //runs every second
@@ -38,12 +31,12 @@ export class InformationComponent implements OnInit, OnDestroy {
     let gameWon: boolean = false;
     this.board?.getCells().forEach(row => {
       row.forEach(cell => {
-        if (!cell.getWasMarked() && cell.getIsMarked() && this.flagCount.getFlagsLeft() > 0) {
-          this.flagCount.decrement();
+        if (!cell.getWasMarked() && cell.getIsMarked() && this.board!.getFlagCount().getFlagsLeft() > 0) {
+          this.board?.getFlagCount().decrement();
           cell.setWasMarked(true);
         }
         else if (cell.getWasMarked() && !cell.getIsMarked()) {
-          this.flagCount.increment();
+          this.board?.getFlagCount().increment();
           cell.setWasMarked(false);
         }
       });

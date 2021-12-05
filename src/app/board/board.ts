@@ -1,3 +1,4 @@
+import { FlagsLeft } from "../information/flagsLeft";
 import { Cell } from "./cells";
 
 const cellSide: number = 0; //SET //length of 1 side of cell
@@ -9,6 +10,7 @@ export class Board {
     private mines: number; //# of mines on the board
     private cells: Cell[][] = []; //2d array of all cells on board //DECLARED IN createCells()
     private boardWidth: number; //can be used?
+    private flagCount: FlagsLeft;
 
     /**
      * Creates board object
@@ -20,6 +22,7 @@ export class Board {
         this.size = size;
         this.boardWidth = size * (cellSide + spaceBetweenCells) + spaceBetweenCells;
         this.createCells();
+        this.flagCount = new FlagsLeft(mines);
     }
     
     /**
@@ -27,14 +30,18 @@ export class Board {
      * @param cell cell object the function is running on
      */
     public isLeftClicked(cell: Cell): void {
+        if (!this.canInteract) {
+            return;
+        }
         if (cell.getIsMine()) {
             cell.setIsRevealed(true);
             //gameOver();
         }
         else if (cell.getIsRevealed()) {
-            //do nothing, maybe
+
         }
         else if (cell.getSurroundingMines() == 0) {
+            cell.setIsRevealed(true);
             this.zeroClicked(cell);
         }
         cell.setIsRevealed(true);
@@ -44,25 +51,76 @@ export class Board {
      * Runs when the cell is right-clicked
      * @param cell cell object the function is running on
      */
-    public isRightClicked(cell: Cell): void {
-        let flagsLeft: boolean = true; //set this
-        if (flagsLeft) {
-            cell.setIsMarked(true);
+    public isRightClicked(cell: Cell): boolean {
+        if ((this.flagCount.getFlagsLeft() || cell.getIsMarked()) && this.canInteract) {
+            cell.setIsMarked(!cell.getIsMarked());
         }
+        return false;
     }
+
+    
+    public getFlagCount(): FlagsLeft {
+        return this.flagCount;
+    }
+    
 
     /**
      * Runs when all surrounding cells are not mines; creates ripple effect; only called in isLeftClicked()
      * @param cell cell object the function is running on
      */
     private zeroClicked(cell: Cell): void {
+        if (cell.getX() != 0 && cell.getY() != 0) {
+            this.isLeftClicked(this.cells[cell.getY() - 1][cell.getX() - 1]);
+        }
+        if (cell.getY() != 0) {
+            this.isLeftClicked(this.cells[cell.getY() - 1][cell.getX()]);
+        }
+        if (cell.getX() != this.size - 1 && cell.getY() != 0) {
+            this.isLeftClicked(this.cells[cell.getY() - 1][cell.getX() + 1]);
+        }
+        if (cell.getX() != 0) {
+            this.isLeftClicked(this.cells[cell.getY()][cell.getX() - 1]);
+        }
+        if (cell.getX() != this.size - 1) {
+            this.isLeftClicked(this.cells[cell.getY()][cell.getX() + 1]);
+        }
+        if (cell.getX() != 0 && cell.getY() != this.size - 1) {
+            this.isLeftClicked(this.cells[cell.getY() + 1][cell.getX() - 1]);
+        }
+        if (cell.getY() != this.size - 1) {
+            this.isLeftClicked(this.cells[cell.getY() + 1][cell.getX()]);
+        }
+        if (cell.getX() != this.size - 1 && cell.getY() != this.size - 1) {
+            this.isLeftClicked(this.cells[cell.getY() + 1][cell.getX() + 1]);
+        }
+    }
+
+    public checkWinCondition(): boolean { //checks if all non-mine cells are revealed
+        let isWin: boolean = true;
         this.cells.forEach(row => {
-            row.forEach(otherCell => {
-                if (otherCell.equalsPosition(cell.getX() - 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() - 1, cell.getY()) || otherCell.equalsPosition(cell.getX() - 1, cell.getY() + 1) || otherCell.equalsPosition(cell.getX(), cell.getY() - 1) || otherCell.equalsPosition(cell.getX(), cell.getY() + 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() - 1) || otherCell.equalsPosition(cell.getX() + 1, cell.getY()) || otherCell.equalsPosition(cell.getX() + 1, cell.getY() + 1)) { //this if statement finds all 8 surrounding cells and sends them through the isLeftClicked() method
-                    this.isLeftClicked(otherCell);
+            row.forEach(cell => {
+                if (!cell.getIsMine() && !cell.getIsRevealed()) {
+                    isWin = false;
                 }
             });
         });
+        if (isWin) {
+            this.canInteract = false;
+        }
+        return isWin;
+    }
+
+    public checkLossCondition(): boolean { //checks if any mines have been revealed
+        let isLoss: boolean = false;
+        this.cells.forEach(row => {
+            row.forEach(cell => {
+                if (cell.getIsMine() && cell.getIsRevealed()) {
+                    isLoss = true;
+                    this.canInteract = false;
+                }
+            });
+        });
+        return isLoss;
     }
 
     public getMines(): number { //getter method for mines

@@ -12,7 +12,7 @@ import { Board } from './board';
 export class BoardComponent implements OnInit, OnDestroy {
   @Input() private cellsPerRow?: number; //find a way to get this
   @Input() private mines?: number; //find a way to get this
-  private board?: Board; //Board object for the component
+  private board!: Board; //Board object for the component
   private subscription: Subscription = new Subscription(); //used to loop a method
   private timer: Timer = new Timer(); //Timer object for the component
 
@@ -41,13 +41,20 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());
-    console.log(this.getBoard().getCells())
   }
 
   private loop(): void { //runs every second
     //display cells and image on top (if displayed)
-    if (this.board?.getInteract()) {
+    if (this.board.getInteract()) {
       //if cell is clicked, run here
+    }
+    if (this.board.checkWinCondition()) {
+      //gameWin();
+      console.log("You won!");
+    }
+    if (this.board.checkLossCondition()) {
+      //gameOver();
+      console.log("You lost!");
     }
   }
 
