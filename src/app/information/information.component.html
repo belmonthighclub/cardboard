@@ -1,1 +1,7 @@
 <p>Information Goes Here</p>
+<div id = "won" *ngIf = "getBoard().checkWinCondition()">
+    <h1>Congrats on the win!</h1>
+</div>
+<div id = "lost" *ngIf = "getBoard().checkLossCondition()">
+    <h1>Oops! You lost!</h1>
+</div>

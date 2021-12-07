@@ -5,9 +5,9 @@
     border-spacing: 5px;
 }
 img {
-    background-color: limegreen;
+    background-color: #fceb03ff;
 }
-#blank {
+.blank {
     background-color: aqua;
 }
 .rows {

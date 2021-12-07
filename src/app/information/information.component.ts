@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { Board } from '../board/board';
@@ -12,9 +13,9 @@ import { Timer } from './timer';
 })
 
 export class InformationComponent implements OnInit, OnDestroy {
-  @Input() public timer?: Timer; //Timer object for the component; recieved from BoardComponent
+  @Input() public timer!: Timer; //Timer object for the component; recieved from BoardComponent
   private subscription: Subscription = new Subscription(); //used to loop a method
-  @Input() public board?: Board; //Board object for the component; recieved from BoardComponent
+  @Input() public board!: Board; //Board object for the component; recieved from BoardComponent
   private pauseButton: PauseButton = new PauseButton(); //PauseButton object for the component
 
   constructor() {
@@ -23,6 +24,14 @@ export class InformationComponent implements OnInit, OnDestroy {
   ngOnInit(): void { //runs on initialization
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());
+  }
+
+  public getBoard(): Board { //getter method for board
+    return this.board;
+  }
+
+  public getTimer(): Timer { //getter method for timer
+    return this.timer;
   }
   
   private loop(): void { //runs every second
