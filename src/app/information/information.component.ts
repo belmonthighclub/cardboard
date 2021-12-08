@@ -3,7 +3,6 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { Board } from '../board/board';
 import { FlagsLeft } from './flagsLeft';
-import { PauseButton } from './pauseButton';
 import { Timer } from './timer';
 
 @Component({
@@ -16,7 +15,7 @@ export class InformationComponent implements OnInit, OnDestroy {
   @Input() public timer!: Timer; //Timer object for the component; recieved from BoardComponent
   private subscription: Subscription = new Subscription(); //used to loop a method
   @Input() public board!: Board; //Board object for the component; recieved from BoardComponent
-  private pauseButton: PauseButton = new PauseButton(); //PauseButton object for the component
+  private paused: boolean = false;
 
   constructor() {
   }
@@ -54,9 +53,16 @@ export class InformationComponent implements OnInit, OnDestroy {
       //gameWon();
       this.timer?.stopTimer();
     }
-    else if (this.pauseButton.getPaused()) {
-      this.timer?.setIsPaused(true);
-    }
+  }
+
+  public getPaused(): boolean { //getter method for paused
+    return this.paused;
+  }
+
+  public togglePause(): void { //pause needs to 1.) stop the timer and 2.) stop the player from doing anything
+    this.paused = !this.paused;
+    this.timer.setIsPaused(this.paused);
+    this.board.setInteract(this.paused);
   }
 
   ngOnDestroy(): void { //runs when destroyed

@@ -1,7 +1,23 @@
-<p>Information Goes Here</p>
-<div id = "won" *ngIf = "getBoard().checkWinCondition()">
-    <h1>Congrats on the win!</h1>
-</div>
-<div id = "lost" *ngIf = "getBoard().checkLossCondition()">
-    <h1>Oops! You lost!</h1>
-</div>
+<body style="background-color:hotpink;">
+    <p>Information Goes Here</p>
+    <div id = "won" *ngIf = "getBoard().checkWinCondition()">
+        <h1>Congrats on the win!</h1>
+    </div>
+    <div id = "lost" *ngIf = "getBoard().checkLossCondition()">
+        <h1>Oops! You lost!</h1>
+    </div>
+    <div id = "information">
+        <div id = "pauseButton">
+            <button (click) = "togglePause()" >
+                <img class = "button" *ngIf = "this.getPaused()" src = "../../assets/play.png">
+                <img class = "button" *ngIf = "!this.getPaused()" src = "../../assets/pause.png">
+            </button>
+        </div>
+        <div id = "timer">
+
+        </div>
+        <div id = "flagCount">
+            
+        </div>
+    </div>
+</body>

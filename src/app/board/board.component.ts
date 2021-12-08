@@ -56,6 +56,15 @@ export class BoardComponent implements OnInit, OnDestroy {
       //gameOver();
       console.log("You lost!");
     }
+    if (this.board.checkLossCondition() || this.board.checkWinCondition()) {
+      this.board.getCells().forEach(row => {
+        row.forEach(cell => {
+          if (cell.getIsMine()) {
+          cell.setIsRevealed(true);
+          }
+        });
+      });
+    }
   }
 
   ngOnDestroy(): void { //runs when destroyed

@@ -138,13 +138,9 @@ export class Board {
     public getInteract(): boolean { //getter method for interact
         return this.canInteract;
     }
-
-    public disable(): void { //called when timer is paused; disables all board interactions
-        this.canInteract = false;
-    }
-
-    public enable(): void { //called when timer is unpaused; enables all board interactions
-        this.canInteract = true;
+    
+    public setInteract(newInteract: boolean): void { //setter method for interact
+        this.canInteract = newInteract;
     }
 
     private createCells(): void { //creates cell array; only called in constructor
