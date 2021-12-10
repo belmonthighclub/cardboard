@@ -1,9 +1,9 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { Board } from '../board/board';
-import { FlagsLeft } from './flagsLeft';
 import { Timer } from './timer';
+
+const LOOP_SPEED: number = 1000;
 
 @Component({
   selector: 'app-information',
@@ -16,12 +16,13 @@ export class InformationComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription(); //used to loop a method
   @Input() public board!: Board; //Board object for the component; recieved from BoardComponent
   private paused: boolean = false;
+  private timesLooped: number = 0;
 
   constructor() {
   }
 
   ngOnInit(): void { //runs on initialization
-    const source = interval(1000);
+    const source = interval(LOOP_SPEED);
     this.subscription = source.subscribe(val => this.loop());
   }
 
@@ -35,7 +36,11 @@ export class InformationComponent implements OnInit, OnDestroy {
   
   private loop(): void { //runs every second
     //print out timer and flagCount
-    this.timer?.increment();
+    this.timesLooped++;
+    if (this.timesLooped * LOOP_SPEED == 1000) {
+      this.timer?.increment();
+      this.timesLooped = 0;
+    }
     let gameWon: boolean = false;
     this.board?.getCells().forEach(row => {
       row.forEach(cell => {
@@ -60,9 +65,11 @@ export class InformationComponent implements OnInit, OnDestroy {
   }
 
   public togglePause(): void { //pause needs to 1.) stop the timer and 2.) stop the player from doing anything
-    this.paused = !this.paused;
-    this.timer.setIsPaused(this.paused);
-    this.board.setInteract(this.paused);
+    if (!(this.board.checkLossCondition() || this.board.checkWinCondition())) {
+      this.paused = !this.paused;
+      this.timer.setIsPaused(this.paused);
+      this.board.setInteract(!this.paused);
+    }
   }
 
   ngOnDestroy(): void { //runs when destroyed

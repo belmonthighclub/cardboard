@@ -37,7 +37,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.board = new Board(this.cellsPerRow, this.mines);
     }
     else {
-      this.board = new Board(7, 7);
+      this.board = new Board(3, 2);
     }
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());
@@ -52,7 +52,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       //gameWin();
       console.log("You won!");
     }
-    if (this.board.checkLossCondition()) {
+    else if (this.board.checkLossCondition()) {
       //gameOver();
       console.log("You lost!");
     }
@@ -64,6 +64,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           }
         });
       });
+      this.timer.stopTimer();
     }
   }
 

@@ -30,7 +30,7 @@ export class Board {
      * @param cell cell object the function is running on
      */
     public isLeftClicked(cell: Cell): void {
-        if (!this.canInteract) {
+        if (!this.canInteract || cell.getIsMarked()) {
             return;
         }
         if (cell.getIsMine()) {
