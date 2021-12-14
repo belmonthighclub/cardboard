@@ -3,7 +3,7 @@ import { interval, Subscription } from 'rxjs';
 import { Board } from '../board/board';
 import { Timer } from './timer';
 
-const LOOP_SPEED: number = 200;
+const LOOPS_PER_SECOND: number = 5;
 
 @Component({
   selector: 'app-information',
@@ -22,7 +22,7 @@ export class InformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void { //runs on initialization
-    const source = interval(LOOP_SPEED);
+    const source = interval(1000/LOOPS_PER_SECOND);
     this.subscription = source.subscribe(val => this.loop());
   }
 
@@ -37,7 +37,7 @@ export class InformationComponent implements OnInit, OnDestroy {
   private loop(): void { //runs every second
     //print out timer and flagCount
     this.timesLooped++;
-    if (this.timesLooped * LOOP_SPEED == 1000) {
+    if (this.timesLooped == LOOPS_PER_SECOND) {
       this.timer?.increment();
       this.timesLooped = 0;
     }

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 
-const LOOP_SPEED = 1000;
+const LOOPS_PER_SECOND = 1;
 
 @Component({
   selector: 'app-start-screen',
@@ -16,7 +16,7 @@ export class StartScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const source = interval(LOOP_SPEED);
+    const source = interval(1000/LOOPS_PER_SECOND);
     this.subscription = source.subscribe(val => this.loop());
   }
   private loop(): void {
