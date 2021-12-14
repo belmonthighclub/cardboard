@@ -1,9 +1,9 @@
 <body style="background-color:hotpink;">
     <div id = "won" *ngIf = "getBoard().checkWinCondition()">
-        <h1>Congrats on the win!</h1>
+        <h4>Congrats on the win!</h4>
     </div>
     <div id = "lost" *ngIf = "getBoard().checkLossCondition() && !getBoard().checkWinCondition()">
-        <h1>Oops! You lost!</h1>
+        <h4>Oops! You lost!</h4>
     </div>
     <div id = "information">
         <div class = "info" id = "pauseButton">

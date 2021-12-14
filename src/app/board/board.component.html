@@ -7,7 +7,7 @@
     </span>
 </div>-->
 
-<div id = "board">
+<div id = "board" (contextmenu) = "false">
     <div class = "rows" *ngFor = "let row of getBoard().getCells()">
         <div class = "cellsInRows" *ngFor = "let cell of row">
             <span class = "cells" (contextmenu) = "getBoard().isRightClicked(cell)" (click) = "getBoard().isLeftClicked(cell)">

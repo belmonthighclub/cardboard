@@ -24,12 +24,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   public getBoard(): Board { //getter method for board
-    if (this.board) {
-      return this.board;
-    }
-    else {
-      return new Board(5, 5);
-    }
+    return this.board;
   }
 
   ngOnInit(): void { //runs on initialization
@@ -37,7 +32,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.board = new Board(this.cellsPerRow, this.mines);
     }
     else {
-      this.board = new Board(3, 2);
+      this.board = new Board(7, 14);
     }
     const source = interval(1000);
     this.subscription = source.subscribe(val => this.loop());
@@ -59,8 +54,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.board.checkLossCondition() || this.board.checkWinCondition()) {
       this.board.getCells().forEach(row => {
         row.forEach(cell => {
-          if (cell.getIsMine()) {
-          cell.setIsRevealed(true);
+          if (cell.getIsMine() && !cell.getIsMarked()) {
+            cell.setIsRevealed(true);
+          }
+          else if (!cell.getIsMine() && cell.getIsMarked()) {
+            cell.setIsMarked(false);
           }
         });
       });

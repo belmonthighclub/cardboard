@@ -3,7 +3,7 @@ import { interval, Subscription } from 'rxjs';
 import { Board } from '../board/board';
 import { Timer } from './timer';
 
-const LOOP_SPEED: number = 1000;
+const LOOP_SPEED: number = 200;
 
 @Component({
   selector: 'app-information',
