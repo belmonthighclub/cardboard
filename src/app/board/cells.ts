@@ -9,6 +9,7 @@ export class Cell {
     private y: number = 0; //row # of the cell (row 1 is 0)
     private isMarked: boolean = false; //is the cell marked as a mine
     private imageAddress: string; //address to the image for a cell
+    private isQuestioned: boolean = false;
 
     /**
      * Creates cell object
@@ -109,6 +110,14 @@ export class Cell {
 
     public setIsRevealed(isRevealed: boolean): void { //setter method for isRevealed
         this.isRevealed = isRevealed;
+    }
+
+    public getIsQuestioned(): boolean { //getter method for isQuestioned
+        return this.isQuestioned;
+    }
+
+    public setIsQuestioned(isQuestioned: boolean): void { //setter method for isQuestioned
+        this.isQuestioned = isQuestioned;
     }
 
     public getWasMarked(): boolean { //getter method for wasMarked

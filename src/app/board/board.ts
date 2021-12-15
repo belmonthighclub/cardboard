@@ -30,7 +30,7 @@ export class Board {
      * @param cell cell object the function is running on
      */
     public isLeftClicked(cell: Cell): void {
-        if (!this.canInteract || cell.getIsMarked()) {
+        if (!this.canInteract || cell.getIsMarked() || cell.getIsQuestioned()) {
             return;
         }
         if (cell.getIsMine()) {
@@ -52,8 +52,17 @@ export class Board {
      * @param cell cell object the function is running on
      */
     public isRightClicked(cell: Cell): boolean {
-        if ((this.flagCount.getFlagsLeft() || cell.getIsMarked()) && this.canInteract) {
-            cell.setIsMarked(!cell.getIsMarked());
+        if (this.canInteract) {
+            if (cell.getIsMarked()) {
+                cell.setIsQuestioned(true);
+                cell.setIsMarked(false);
+            }
+            else if (cell.getIsQuestioned()) {
+                cell.setIsQuestioned(false);
+            }
+            else {
+                cell.setIsMarked(true);
+            }
         }
         return false;
     }

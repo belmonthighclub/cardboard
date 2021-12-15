@@ -22,6 +22,7 @@ export class InformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void { //runs on initialization
+    //this.togglePause(); //starts paused - comment out if start unpaused
     const source = interval(1000/LOOPS_PER_SECOND);
     this.subscription = source.subscribe(val => this.loop());
   }
@@ -44,7 +45,7 @@ export class InformationComponent implements OnInit, OnDestroy {
     let gameWon: boolean = false;
     this.board?.getCells().forEach(row => {
       row.forEach(cell => {
-        if (!cell.getWasMarked() && cell.getIsMarked() && this.board!.getFlagCount().getFlagsLeft() > 0) {
+        if (!cell.getWasMarked() && cell.getIsMarked()) {
           this.board?.getFlagCount().decrement();
           cell.setWasMarked(true);
         }

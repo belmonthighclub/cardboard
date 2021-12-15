@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { BoardComponent } from "./board/board.component";
+import { StartScreenComponent } from "./start-screen/start-screen.component";
 
 
 const routes: Routes = [
-    {path : "path", component: BoardComponent},
-    // {path : "path", component: board.componen},
+    {path : "path", component: StartScreenComponent},
+    // {path : "path", component: board.component},
 ]
 
 @NgModule({

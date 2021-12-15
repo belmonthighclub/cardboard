@@ -1,5 +1,5 @@
 export class FlagsLeft {
-    private flagsLeft: number = 0; //number of flags left to place on cells
+    private flagsLeft: number; //number of flags left to place on cells
 
     /**
      * creates counter for flags left to add

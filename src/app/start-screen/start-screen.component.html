@@ -1,1 +1,2 @@
-<p>start-screen works!</p>
+<app-board *ngIf = "getPlaying()" [cellsPerRow] = "getCellsPerRow()" [mines] = "getMines()" (emitter) = "processEmit($event)"></app-board>
+<!--<app-end-screen *ngIf = "getGameOver()"></app-end-screen>-->

@@ -1,7 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { Timer } from '../information/timer';
 import { Board } from './board';
+
+const LOOPS_PER_SECOND: number = 1;
+const AUTO_SOLVE: boolean = false;
+const AUTO_FAIL: boolean = false;
 
 @Component({
   selector: 'app-board',
@@ -10,11 +14,12 @@ import { Board } from './board';
 })
 
 export class BoardComponent implements OnInit, OnDestroy {
-  @Input() private cellsPerRow?: number; //find a way to get this
-  @Input() private mines?: number; //find a way to get this
+  @Input() public cellsPerRow!: number; //find a way to get this
+  @Input() public mines!: number; //find a way to get this
   private board!: Board; //Board object for the component
   private subscription: Subscription = new Subscription(); //used to loop a method
   private timer: Timer = new Timer(); //Timer object for the component
+  @Output() public emitter: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { //unused
   }
@@ -28,20 +33,20 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void { //runs on initialization
-    if (this.cellsPerRow && this.mines) {
-      this.board = new Board(this.cellsPerRow, this.mines);
+    this.board = new Board(this.cellsPerRow, this.mines);
+    if (AUTO_SOLVE || AUTO_FAIL) {
+      this.board.setInteract(false);
     }
-    else {
-      this.board = new Board(7, 14);
-    }
-    const source = interval(1000);
+    const source = interval(1000/LOOPS_PER_SECOND);
     this.subscription = source.subscribe(val => this.loop());
   }
 
   private loop(): void { //runs every second
-    //display cells and image on top (if displayed)
-    if (this.board.getInteract()) {
-      //if cell is clicked, run here
+    if (AUTO_SOLVE) {
+      this.autoSolve();
+    }
+    else if (AUTO_FAIL) {
+      this.autoFail();
     }
     if (this.board.checkWinCondition()) {
       //gameWin();
@@ -68,6 +73,38 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void { //runs when destroyed
     this.subscription && this.subscription.unsubscribe();
+  }
+
+  private autoSolve(): void { //auto-solves the puzzle, enabled by constant 'AUTO_SOLVE'
+    this.board.getCells().forEach(row => {
+      row.forEach(cell => {
+        if (!cell.getIsMine()) {
+          cell.setIsRevealed(true);
+        }
+      });
+    });
+  }
+
+  private autoFail(): void { //auto-fails the puzzle, enabled by constant 'AUTO_FAIL', will not run if 'AUTO_SOLVE' is enabled
+    this.board.getCells().forEach(row => {
+      row.forEach(cell => {
+        if (cell.getIsMine()) {
+          cell.setIsRevealed(true);
+          return;
+        }
+      });
+    });
+  }
+
+  public sendOutput(): void {
+    let num: number = 0;
+    if (this.board.checkLossCondition() && !this.board.checkWinCondition()) {
+      num = -1;
+    }
+    else if (this.board.checkWinCondition()) {
+      num = 1;
+    }
+    this.emitter.emit(num);
   }
 }
  
