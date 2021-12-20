@@ -1,0 +1,30 @@
+<div id = "start_screen" *ngIf = "!getPlaying()">
+    <p id = "paragraphIntroduction">Hey! Welcome to the Cardboard Minesweeper! This is a classic game of Minesweeper, where the goal is to reveal all the cells that aren't mines.</p>
+    <ul id = "controlsList">
+        <li>Cell Functions:
+            <ul class = "subList">
+                <li>Left Click: Reveals a cell.</li>
+                <li>Right Click: Cycles through marking the cell as a mine, questioning if the cell is a mine, and unmarking the cell so it can be revealed.</li>
+                <li>If you left click a cell that has no surrounding mines, it'll reveal all the surrounding cells.</li>
+            </ul>
+        </li>
+        <li>Information Panel Instructions:
+            <ul class = "subList">
+                <li>Pause Button: Pauses and resumes the game. Note: the timer stops ticking and the board becomes intangible when the game is paused.</li>
+                <li>Timer: Displays how many seconds you've been playing for.</li>
+                <li>Flags Left: Displays how many mines there are on the board minus the amount of flags on the board. Don't worry, this number <em>can</em> be negative.</li>
+            </ul>
+        </li>
+    </ul>
+    <label for = "sizeInput">Size of the board (x by x):</label>
+    <input id = "sizeInput" name = "sizeInput" required = "true" type = "range" min = "3" max = "20" value = "7" oninput = "this.nextElementSibling.value = this.value" (input) = "setCellsPerRowEvent($event)"><output>7</output><br>
+    <label for = "mineInput">Mines on the board:</label>
+    <input id = "mineInput" name = "mineInput" required = "true" type = "range" min = "getCellsPerRow()" max = "70" value = "(getCellsPerRow() + getCellsPerRow() ** 2) / 2" oninput = "this.nextElementSibling.value = this.value" (input) = "setMinesEvent($event)"><output>{{getCellsPerRow()}}</output><br>
+    <input id = "submit" name = "submit" type = "submit" value = "Submit" (click) = "this.submission()">
+</div>
+<div id = "board" *ngIf = "getPlaying()">
+    <app-board [cellsPerRow] = "getCellsPerRow()" [mines] = "getMines()" (emitter) = "processEmit($event)"></app-board>
+</div>
+<!--<div id = "end_screen" *ngIf = "!getPlaying()">
+    <app-end-screen *ngIf = "getGameOver()"></app-end-screen>
+</div>-->
