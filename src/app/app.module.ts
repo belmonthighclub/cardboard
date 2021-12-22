@@ -8,6 +8,7 @@ import { BoardComponent } from './board/board.component';
 import { InformationComponent } from './information/information.component';
 import { StartScreenComponent } from './start-screen/start-screen.component';
 import { EndScreenComponent } from './end-screen/end-screen.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EndScreenComponent } from './end-screen/end-screen.component';
     EndScreenComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     RouterModule,
     AppRoutingModule

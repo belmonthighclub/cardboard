@@ -10,8 +10,8 @@ const LOOPS_PER_SECOND = 1;
 })
 
 export class StartScreenComponent implements OnInit, OnDestroy {
-  private cellsPerRow: number = 7;
-  private mines: number = 7;
+  public cellsPerRow: number = 8;
+  public mines: number = 10;
   private playing: boolean = false;
   private victory: boolean | null = null;
   private subscription: Subscription = new Subscription(); //used to loop a method
@@ -22,30 +22,6 @@ export class StartScreenComponent implements OnInit, OnDestroy {
 
   public getVictory(): boolean | null {
     return this.victory;
-  }
-  
-  public getCellsPerRow(): number { //getter for cellsPerRow
-    return this.cellsPerRow;
-  }
-  
-  public setCellsPerRow(newCellsPerRow: number): void { //setter for cellsPerRow
-    this.cellsPerRow = newCellsPerRow;
-  }
-
-  public setCellsPerRowEvent(event: Event): void { //setter for cellsPerRow (event)
-    this.cellsPerRow = Number((event.target as HTMLInputElement).value);
-  }
-
-  public getMines(): number { //getter for mines
-    return this.mines;
-  }
-
-  public setMines(newMines: number): void { //setter for mines
-    this.mines = newMines;
-  }
-
-  public setMinesEvent(event: Event): void { //setter for mines (event)
-    this.mines = Number((event.target as HTMLInputElement).value);
   }
 
   constructor() {
@@ -62,6 +38,19 @@ export class StartScreenComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription && this.subscription.unsubscribe();
+  }
+
+  public resetMines(): void {
+    if (this.mines < this.cellsPerRow) {
+      this.mines = this.cellsPerRow;
+    }
+    else if (this.mines > this.maxMines()) {
+      this.mines = this.maxMines();
+    }
+  }
+
+  public maxMines(): number {
+    return this.cellsPerRow ** 2;
   }
 
   public processEmit(event: number): void {

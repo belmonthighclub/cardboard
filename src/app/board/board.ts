@@ -11,6 +11,7 @@ export class Board {
     private cells: Cell[][] = []; //2d array of all cells on board //DECLARED IN createCells()
     private boardWidth: number; //can be used?
     private flagCount: FlagsLeft;
+    private isLooping: boolean = false;
 
     /**
      * Creates board object
@@ -29,6 +30,11 @@ export class Board {
      * Runs when the cell is left-clicked
      * @param cell cell object the function is running on
      */
+    public leftClick(cell: Cell): void {
+        this.isLooping = false;
+        this.isLeftClicked(cell);
+    }
+
     public isLeftClicked(cell: Cell): void {
         if (!this.canInteract || cell.getIsMarked() || cell.getIsQuestioned()) {
             return;
@@ -37,10 +43,11 @@ export class Board {
             cell.setIsRevealed(true);
             //gameOver();
         }
-        else if (cell.getIsRevealed()) {
-
+        else if (cell.getIsRevealed() && !this.isLooping) {
+            this.revealClicked(cell);
         }
         else if (cell.getSurroundingMines() == 0) {
+            this.isLooping = true;
             cell.setIsRevealed(true);
             this.zeroClicked(cell);
         }
@@ -70,6 +77,33 @@ export class Board {
     
     public getFlagCount(): FlagsLeft {
         return this.flagCount;
+    }
+
+    private revealClicked(cell: Cell): void {
+        if (cell.getX() != 0 && cell.getY() != 0) {
+            this.cells[cell.getY() - 1][cell.getX() - 1].setIsRevealed(true);
+        }
+        if (cell.getY() != 0) {
+            this.cells[cell.getY() - 1][cell.getX()].setIsRevealed(true);
+        }
+        if (cell.getX() != this.size - 1 && cell.getY() != 0) {
+            this.cells[cell.getY() - 1][cell.getX() + 1].setIsRevealed(true);
+        }
+        if (cell.getX() != 0) {
+            this.cells[cell.getY()][cell.getX() - 1].setIsRevealed(true);
+        }
+        if (cell.getX() != this.size - 1) {
+            this.cells[cell.getY()][cell.getX() + 1].setIsRevealed(true);
+        }
+        if (cell.getX() != 0 && cell.getY() != this.size - 1) {
+            this.cells[cell.getY() + 1][cell.getX() - 1].setIsRevealed(true);
+        }
+        if (cell.getY() != this.size - 1) {
+            this.cells[cell.getY() + 1][cell.getX()].setIsRevealed(true);
+        }
+        if (cell.getX() != this.size - 1 && cell.getY() != this.size - 1) {
+            this.cells[cell.getY() + 1][cell.getX() + 1].setIsRevealed(true);
+        }
     }
     
 

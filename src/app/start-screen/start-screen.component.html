@@ -10,20 +10,20 @@
         </li>
         <li>Information Panel Instructions:
             <ul class = "subList">
-                <li>Pause Button: Pauses and resumes the game. Note: the timer stops ticking and the board becomes intangible when the game is paused.</li>
+                <li>Pause Button: Pauses and resumes the game. Note: the timer stops and the board cannot be interacted with when the game is paused.</li>
                 <li>Timer: Displays how many seconds you've been playing for.</li>
-                <li>Flags Left: Displays how many mines there are on the board minus the amount of flags on the board. Don't worry, this number <em>can</em> be negative.</li>
+                <li>Flags Left: Displays how many mines there are on the board minus the amount of flags on the board. This number <em>can</em> be negative, which means you are using more flags than there are mines.</li>
             </ul>
         </li>
     </ul>
     <label for = "sizeInput">Size of the board (x by x):</label>
-    <input id = "sizeInput" name = "sizeInput" required = "true" type = "range" min = "3" max = "20" value = "7" oninput = "this.nextElementSibling.value = this.value" (input) = "setCellsPerRowEvent($event)"><output>7</output><br>
+    <input id = "sizeInput" name = "sizeInput" required = "true" type = "range" min = "3" max = "20" [(ngModel)] = "cellsPerRow" (input) = "resetMines()"><output>{{cellsPerRow}} by {{cellsPerRow}} board</output><br>
     <label for = "mineInput">Mines on the board:</label>
-    <input id = "mineInput" name = "mineInput" required = "true" type = "range" min = "getCellsPerRow()" max = "70" value = "(getCellsPerRow() + getCellsPerRow() ** 2) / 2" oninput = "this.nextElementSibling.value = this.value" (input) = "setMinesEvent($event)"><output>{{getCellsPerRow()}}</output><br>
+    <input id = "mineInput" name = "mineInput" required = "true" type = "range" [min] = "cellsPerRow" [max] = "maxMines()" [(ngModel)] = "mines"><output>{{mines}} mines</output><br>
     <input id = "submit" name = "submit" type = "submit" value = "Submit" (click) = "this.submission()">
 </div>
 <div id = "board" *ngIf = "getPlaying()">
-    <app-board [cellsPerRow] = "getCellsPerRow()" [mines] = "getMines()" (emitter) = "processEmit($event)"></app-board>
+    <app-board [cellsPerRow] = "cellsPerRow" [mines] = "mines" (emitter) = "processEmit($event)"></app-board>
 </div>
 <!--<div id = "end_screen" *ngIf = "!getPlaying()">
     <app-end-screen *ngIf = "getGameOver()"></app-end-screen>
