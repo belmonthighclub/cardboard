@@ -50,7 +50,7 @@ export class StartScreenComponent implements OnInit, OnDestroy {
   }
 
   public maxMines(): number {
-    return this.cellsPerRow ** 2;
+    return this.cellsPerRow ** 2 - 1;
   }
 
   public processEmit(event: number): void {
