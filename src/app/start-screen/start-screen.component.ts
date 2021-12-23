@@ -10,7 +10,7 @@ const LOOPS_PER_SECOND = 1;
 })
 
 export class StartScreenComponent implements OnInit, OnDestroy {
-  public cellsPerRow: number = 8;
+  public cellsPerRow: number = 9;
   public mines: number = 10;
   private playing: boolean = false;
   private victory: boolean | null = null;
