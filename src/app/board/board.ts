@@ -41,10 +41,9 @@ export class Board {
         }
         if (cell.getIsMine()) {
             cell.setIsRevealed(true);
-            //gameOver();
         }
-        else if (cell.getIsRevealed() && !this.isLooping) {
-            this.revealClicked(cell);
+        else if (cell.getIsRevealed()/* && !this.isLooping*/) {
+            //this.revealClicked(cell);
         }
         else if (cell.getSurroundingMines() == 0) {
             this.isLooping = true;
