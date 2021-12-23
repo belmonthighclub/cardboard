@@ -43,7 +43,9 @@ export class Board {
             cell.setIsRevealed(true);
         }
         else if (cell.getIsRevealed()/* && !this.isLooping*/) {
-            //this.revealClicked(cell);
+            //this.revealClicked(cell); //The commented code causes an overflow error when uncommented.
+                                        //When uncommented, the error means not all adjacent empty cells not next to a mine are revealed.
+                                        //Commenting the code fixes this issue and does not seem to cause any others.
         }
         else if (cell.getSurroundingMines() == 0) {
             this.isLooping = true;
