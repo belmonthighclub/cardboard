@@ -20,4 +20,8 @@ export class FlagsLeft {
     public getFlagsLeft(): number { //getter method for flagsLeft
         return this.flagsLeft;
     }
+
+    public getFlagCoeff(): boolean { //basically returns 'flag ' when flagsLeft = 1, and 'flags' otherwise
+        return this.flagsLeft == 1;
+    }
 }

@@ -13,10 +13,10 @@
             </button>
         </div>
         <div class = "info" id = "timer">
-            <span id = "time">Time: {{getTimer().getTime()}} seconds</span>
+            <span id = "time">Time: {{getTimer().getTime()}} second</span><span *ngIf = "!(getTimer().getTimeCoeff())">s</span>
         </div>
         <div class = "info" id = "flagCount">
-            <span id = "flags">Flags Left: {{getBoard().getFlagCount().getFlagsLeft()}} flags</span>
+            <span id = "flags">Flags Left: {{getBoard().getFlagCount().getFlagsLeft()}} flag</span><span *ngIf = "!(getBoard().getFlagCount().getFlagCoeff())">s</span>
         </div>
     </div>
 </body>

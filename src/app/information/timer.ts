@@ -32,4 +32,8 @@ export class Timer {
         this.isPaused = true;
         this.stoppedTimer = false;
     }
+
+    public getTimeCoeff(): boolean { //basically returns 'second ' when time = 1, and 'seconds' otherwise
+        return this.time == 1;
+    }
 }
