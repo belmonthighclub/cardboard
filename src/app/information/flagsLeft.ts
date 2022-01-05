@@ -1,5 +1,6 @@
 export class FlagsLeft {
     private flagsLeft: number; //number of flags left to place on cells
+    private totalFlags: number;
 
     /**
      * creates counter for flags left to add
@@ -7,6 +8,7 @@ export class FlagsLeft {
      */
     constructor(mines: number) {
         this.flagsLeft = mines;
+        this.totalFlags = mines;
     }
 
     public decrement(): void { //decrease flagsLeft by 1
@@ -23,5 +25,9 @@ export class FlagsLeft {
 
     public getFlagCoeff(): boolean { //basically returns 'flag ' when flagsLeft = 1, and 'flags' otherwise
         return this.flagsLeft == 1;
+    }
+
+    public getFlagsPlaced(): number {
+        return this.totalFlags - this.flagsLeft;
     }
 }

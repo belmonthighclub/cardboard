@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
+import { Board } from '../board/board';
+import { Timer } from '../information/timer';
 
 const LOOPS_PER_SECOND = 1;
 
@@ -12,6 +14,8 @@ const LOOPS_PER_SECOND = 1;
 export class StartScreenComponent implements OnInit, OnDestroy {
   public cellsPerRow: number = 9;
   public mines: number = 10;
+  public board: Board = new Board(9, 10);
+  public timer: Timer = new Timer();
   private playing: boolean = false;
   private victory: boolean | null = null;
   private subscription: Subscription = new Subscription(); //used to loop a method
@@ -33,7 +37,6 @@ export class StartScreenComponent implements OnInit, OnDestroy {
   }
 
   private loop(): void {
-
   }
 
   ngOnDestroy(): void {
@@ -65,7 +68,24 @@ export class StartScreenComponent implements OnInit, OnDestroy {
     }
   }
 
+  public processEmit2(event: number): void {
+    if (event != 0) {
+      this.playing = false;
+    }
+    if (event == 1) {
+      this.victory = true;
+    }
+    else if (event == -1) {
+      this.victory = false;
+    }
+  }
+
+  public getGameOver(): boolean {
+    return this.victory != null;
+  }
+
   public submission(): void {
+    this.board = new Board(this.cellsPerRow, this.mines);
     this.playing = true;
   }
 }

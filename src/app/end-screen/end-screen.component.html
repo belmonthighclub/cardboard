@@ -1,1 +1,7 @@
-<p>end-screen works!</p>
+<div id = "won" *ngIf = "board.checkWinCondition()">
+    <h2>Congrats on the win!</h2>
+    <h3>You found {{board.getMines()}} mines in {{timer.getTime()}} seconds, revealing {{getNonMines()}} cells and marking {{board.getFlagCount().getFlagsLeft()}} cells!</h3>
+</div>
+<div id = "lost" *ngIf = "board.checkLossCondition() && !board.checkWinCondition()">
+    <h2>Oops! You lost!</h2>
+</div>

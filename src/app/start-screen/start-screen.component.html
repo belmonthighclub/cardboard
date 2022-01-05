@@ -1,4 +1,4 @@
-<div id = "start_screen" *ngIf = "!getPlaying()">
+<div id = "start_screen" *ngIf = "!getPlaying() && !getGameOver()">
     <p id = "paragraphIntroduction">Hey! Welcome to the Cardboard Minesweeper! This is a classic game of Minesweeper, where the goal is to reveal all the cells that aren't mines.</p>
     <ul id = "controlsList">
         <li>Cell Functions:
@@ -22,9 +22,9 @@
     <input id = "mineInput" name = "mineInput" required = "true" type = "range" [min] = "cellsPerRow" [max] = "maxMines()" [(ngModel)] = "mines"><output>{{mines}} mines</output><br>
     <input id = "submit" name = "submit" type = "submit" value = "Submit" (click) = "this.submission()">
 </div>
-<div id = "board" *ngIf = "getPlaying()">
-    <app-board [cellsPerRow] = "cellsPerRow" [mines] = "mines" (emitter) = "processEmit($event)"></app-board>
+<div id = "end_screen" *ngIf = "getGameOver() && !getPlaying()">
+    <app-end-screen [board] = "board" [timer] = "timer" (emitter) = "processEmit2($event)"></app-end-screen>
 </div>
-<!--<div id = "end_screen" *ngIf = "!getPlaying()">
-    <app-end-screen *ngIf = "getGameOver()"></app-end-screen>
-</div>-->
+<div id = "board" *ngIf = "getPlaying() || getGameOver()">
+    <app-board [board] = "board" [timer] = "timer" (emitter) = "processEmit($event)"></app-board>
+</div>

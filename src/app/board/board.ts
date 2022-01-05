@@ -1,15 +1,11 @@
 import { FlagsLeft } from "../information/flagsLeft";
 import { Cell } from "./cells";
 
-const cellSide: number = 0; //SET //length of 1 side of cell
-const spaceBetweenCells: number = 0; //SET //length of space between adjacent sides of 2 cells
-
 export class Board {
     private canInteract: boolean = true; //can interact with the board; directly related to pause button
     private size: number; //size of board (size x size)
     private mines: number; //# of mines on the board
     private cells: Cell[][] = []; //2d array of all cells on board //DECLARED IN createCells()
-    private boardWidth: number; //can be used?
     private flagCount: FlagsLeft;
     private isLooping: boolean = false;
 
@@ -21,11 +17,10 @@ export class Board {
     constructor (size: number, mines: number) {
         this.mines = mines;
         this.size = size;
-        this.boardWidth = size * (cellSide + spaceBetweenCells) + spaceBetweenCells;
         this.createCells();
         this.flagCount = new FlagsLeft(mines);
     }
-    
+
     /**
      * Runs when the cell is left-clicked
      * @param cell cell object the function is running on
@@ -35,18 +30,15 @@ export class Board {
         this.isLeftClicked(cell);
     }
 
-    public isLeftClicked(cell: Cell): void {
+    private isLeftClicked(cell: Cell): void {
         if (!this.canInteract || cell.getIsMarked() || cell.getIsQuestioned()) {
             return;
         }
         if (cell.getIsMine()) {
             cell.setIsRevealed(true);
         }
-        else if (cell.getIsRevealed()/* && !this.isLooping*/) {
-            //this.revealClicked(cell); 
-            //The commented code causes an overflow error when uncommented.
-            //When uncommented, the error means not all adjacent empty cells not next to a mine are revealed.
-            //Commenting the code fixes this issue and does not seem to cause any others.
+        else if (cell.getIsRevealed()) {
+
         }
         else if (cell.getSurroundingMines() == 0) {
             this.isLooping = true;
@@ -76,42 +68,13 @@ export class Board {
         return false;
     }
 
-    
     public getFlagCount(): FlagsLeft {
         return this.flagCount;
     }
 
-    private revealClicked(cell: Cell): void {
-        if (cell.getX() != 0 && cell.getY() != 0) {
-            this.cells[cell.getY() - 1][cell.getX() - 1].setIsRevealed(true);
-        }
-        if (cell.getY() != 0) {
-            this.cells[cell.getY() - 1][cell.getX()].setIsRevealed(true);
-        }
-        if (cell.getX() != this.size - 1 && cell.getY() != 0) {
-            this.cells[cell.getY() - 1][cell.getX() + 1].setIsRevealed(true);
-        }
-        if (cell.getX() != 0) {
-            this.cells[cell.getY()][cell.getX() - 1].setIsRevealed(true);
-        }
-        if (cell.getX() != this.size - 1) {
-            this.cells[cell.getY()][cell.getX() + 1].setIsRevealed(true);
-        }
-        if (cell.getX() != 0 && cell.getY() != this.size - 1) {
-            this.cells[cell.getY() + 1][cell.getX() - 1].setIsRevealed(true);
-        }
-        if (cell.getY() != this.size - 1) {
-            this.cells[cell.getY() + 1][cell.getX()].setIsRevealed(true);
-        }
-        if (cell.getX() != this.size - 1 && cell.getY() != this.size - 1) {
-            this.cells[cell.getY() + 1][cell.getX() + 1].setIsRevealed(true);
-        }
-    }
-    
-
     /**
      * Runs when all surrounding cells are not mines; creates ripple effect; only called in isLeftClicked()
-     * @param cell cell object the function is running on
+     * @param cell cell object the function is running over
      */
     private zeroClicked(cell: Cell): void {
         if (cell.getX() != 0 && cell.getY() != 0) {
@@ -139,7 +102,7 @@ export class Board {
             this.isLeftClicked(this.cells[cell.getY() + 1][cell.getX() + 1]);
         }
     }
-
+    
     public checkWinCondition(): boolean { //checks if all non-mine cells are revealed
         let isWin: boolean = true;
         this.cells.forEach(row => {
@@ -183,7 +146,7 @@ export class Board {
     public getInteract(): boolean { //getter method for interact
         return this.canInteract;
     }
-    
+
     public setInteract(newInteract: boolean): void { //setter method for interact
         this.canInteract = newInteract;
     }
@@ -245,7 +208,7 @@ export class Board {
                         }
                     }
                 }
-                this.cells[y][x] = new Cell(isMine, nearbyMines, x, y); //this.cells[y][x] is the same thing as this.cells[rows][columns], because of my stupid brain
+                this.cells[y][x] = new Cell(isMine, nearbyMines, x, y); //this.cells[y][x] is the same thing as this.cells[rows][columns], because of my stupid brain. FLIPPING X AND Y BREAKS THE PROGRAM
             }
         }
     }

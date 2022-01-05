@@ -14,11 +14,9 @@ const AUTO_FAIL: boolean = false;
 })
 
 export class BoardComponent implements OnInit, OnDestroy {
-  @Input() public cellsPerRow!: number; //find a way to get this
-  @Input() public mines!: number; //find a way to get this
-  private board!: Board; //Board object for the component
+  @Input() public board!: Board; //Board object for the component
   private subscription: Subscription = new Subscription(); //used to loop a method
-  private timer: Timer = new Timer(); //Timer object for the component
+  @Input() public timer!: Timer; //Timer object for the component
   @Output() public emitter: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { //unused
@@ -33,7 +31,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void { //runs on initialization
-    this.board = new Board(this.cellsPerRow, this.mines);
     if (AUTO_SOLVE || AUTO_FAIL) {
       this.board.setInteract(false);
     }
@@ -51,10 +48,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.board.checkWinCondition()) {
       //gameWin();
       console.log("You won!");
+      this.sendOutput();
     }
     else if (this.board.checkLossCondition()) {
       //gameOver();
       console.log("You lost!");
+      this.sendOutput();
     }
     if (this.board.checkLossCondition() || this.board.checkWinCondition()) {
       this.board.getCells().forEach(row => {

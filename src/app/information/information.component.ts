@@ -16,7 +16,6 @@ export class InformationComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription(); //used to loop a method
   @Input() public board!: Board; //Board object for the component; recieved from BoardComponent
   private paused: boolean = false;
-  private timesLooped: number = 0;
 
   constructor() {
   }
@@ -37,11 +36,7 @@ export class InformationComponent implements OnInit, OnDestroy {
   
   private loop(): void { //runs every second
     //print out timer and flagCount
-    this.timesLooped++;
-    if (this.timesLooped == LOOPS_PER_SECOND) {
-      this.timer?.increment();
-      this.timesLooped = 0;
-    }
+    this.timer?.increment();
     let gameWon: boolean = false;
     this.board?.getCells().forEach(row => {
       row.forEach(cell => {

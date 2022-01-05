@@ -12,7 +12,11 @@ export class Timer {
     }
 
     public getTime(): number { //getter method for time
-        return this.time;
+        return Math.floor(this.time/5);
+    }
+
+    public getExactTime(): number {
+        return this.time/5;
     }
     
     public getIsPaused(): boolean { //getter method for isPaused
@@ -34,6 +38,6 @@ export class Timer {
     }
 
     public getTimeCoeff(): boolean { //basically returns 'second ' when time = 1, and 'seconds' otherwise
-        return this.time == 1;
+        return Math.floor(this.time/5) == 1;
     }
 }
