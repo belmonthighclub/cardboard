@@ -135,4 +135,8 @@ export class Cell {
     public setIsMarked(isMarked: boolean): void { //setter method for isMarked
         this.isMarked = isMarked;
     }
+
+    public markedMine(): boolean {
+        return this.isMarked && this.isMine;
+    }
 }

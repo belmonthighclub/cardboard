@@ -14,7 +14,7 @@ export class EndScreenComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription(); //used to loop a method
   @Input() public board!: Board;
   @Input() public timer!: Timer;
-  @Output() public emitter: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public emitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   constructor() {
@@ -32,18 +32,19 @@ export class EndScreenComponent implements OnInit, OnDestroy {
     this.subscription && this.subscription.unsubscribe();
   }
 
-  public sendOutput(): void {
-    let num: number = 0;
-    if (this.board.checkLossCondition() && !this.board.checkWinCondition()) {
-      num = -1;
-    }
-    else if (this.board.checkWinCondition()) {
-      num = 1;
-    }
-    this.emitter.emit(num);
+  public resetGame(): void {
+    this.emitter.emit(true);
   }
 
-  public getNonMines() {
-    return this.board.getSize() ** 2 - this.board.getMines();
+  public getNonMines(): number {
+    let nonMines: number = 0;
+    this.board.getCells().forEach(row => {
+      row.forEach(cell => {
+        if (!cell.getIsRevealed() && !cell.getIsMine()) {
+          nonMines++;
+        }
+      });
+    });
+    return nonMines;
   }
 }

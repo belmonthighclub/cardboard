@@ -72,6 +72,18 @@ export class Board {
         return this.flagCount;
     }
 
+    public getCorrectMarks(): number {
+        let correctMarks: number = 0;
+        for (let row: number = 0; row < this.size; row++) {
+            this.cells[row].forEach(cell => {
+                if (cell.markedMine()) {
+                    correctMarks++;
+                }
+            });
+        }
+        return correctMarks;
+    }
+
     /**
      * Runs when all surrounding cells are not mines; creates ripple effect; only called in isLeftClicked()
      * @param cell cell object the function is running over

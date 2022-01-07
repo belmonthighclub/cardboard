@@ -1,4 +1,4 @@
-<body style="background-color:hotpink;">
+<body>
     <!--<div id = "won" *ngIf = "getBoard().checkWinCondition()">
         <h4>Congrats on the win!</h4>
     </div>
@@ -7,7 +7,7 @@
     </div>-->
     <div id = "information">
         <div class = "info" id = "pauseButton">
-            <button (click) = "togglePause()">
+            <button id = "button" (click) = "togglePause()">
                 <img class = "button" *ngIf = "this.getPaused()" src = "../../assets/play.png">
                 <img class = "button" *ngIf = "!this.getPaused()" src = "../../assets/pause.png">
             </button>

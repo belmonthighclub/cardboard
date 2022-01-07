@@ -68,15 +68,11 @@ export class StartScreenComponent implements OnInit, OnDestroy {
     }
   }
 
-  public processEmit2(event: number): void {
-    if (event != 0) {
+  public processEmit2(event: boolean): void {
+    if (event) {
       this.playing = false;
-    }
-    if (event == 1) {
-      this.victory = true;
-    }
-    else if (event == -1) {
-      this.victory = false;
+      this.victory = null;
+      this.submission();
     }
   }
 

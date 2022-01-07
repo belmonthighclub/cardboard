@@ -7,6 +7,14 @@
     display: flex;
 }
 
+button {
+    background-color: aqua;
+}
+
+body {
+    background-color: hotpink;
+}
+
 .info {
     margin-right: 75px;
     margin-left: 75px;
