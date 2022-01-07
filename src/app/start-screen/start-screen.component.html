@@ -1,26 +1,34 @@
 <div id = "start_screen" *ngIf = "!getPlaying() && !getGameOver()">
-    <div style="border: 2px solid black"><p id = "paragraphIntroduction">Hey! Welcome to the Cardboard Minesweeper! This is a classic game of Minesweeper, where the goal is to reveal all the cells that aren't mines.</p></div>
-    <ul id = "controlsList">
-        <li>Cell Functions:
-            <ul class = "subList">
-                <li>Left Click: Reveals a cell.</li>
-                <li>Right Click: Cycles through marking the cell as a mine, questioning if the cell is a mine, and unmarking the cell so it can be revealed.</li>
-                <li>If you left click a cell that has no surrounding mines, it'll reveal all the surrounding cells.</li>
-            </ul>
-        </li>
-        <li>Information Panel Instructions:
-            <ul class = "subList">
-                <li>Pause Button: Pauses and resumes the game. Note: the timer stops and the board cannot be interacted with when the game is paused.</li>
-                <li>Timer: Displays how many seconds you've been playing for.</li>
-                <li>Flags Left: Displays how many mines there are on the board minus the amount of flags on the board. This number <em>can</em> be negative, which means you are using more flags than there are mines.</li>
-            </ul>
-        </li>
-    </ul>
-    <label for = "sizeInput">Size of the board (x by x):</label>
-    <input id = "sizeInput" name = "sizeInput" required = "true" type = "range" min = "3" max = "20" [(ngModel)] = "cellsPerRow" (input) = "resetMines()"><output>{{cellsPerRow}} by {{cellsPerRow}} board</output><br>
-    <label for = "mineInput">Mines on the board:</label>
-    <input id = "mineInput" name = "mineInput" required = "true" type = "range" [min] = "cellsPerRow" [max] = "maxMines()" [(ngModel)] = "mines"><output>{{mines}} mines</output><br>
-    <input id = "submit" name = "submit" type = "submit" value = "Submit" (click) = "this.submission()">
+    <div id = "intro">
+        <p id = "paragraphIntroduction"><span>Hey! Welcome to the Cardboard Minesweeper! This is a classic game of Minesweeper, where the goal is to reveal all the cells that aren't mines.</span></p>
+    </div>
+    <div id = "controls">
+        <ul id = "controlsList">
+            <li><span>Functions:</span>
+                <ul class = "subList">
+                    <li><span>Left Click: Reveals a cell.</span></li>
+                    <li><span>Right Click: Cycles through marking the cell as a mine, questioning if the cell is a mine, and unmarking the cell so it can be revealed.</span></li>
+                    <li><span>If you left click a cell that has no surrounding mines, it'll reveal all the surrounding cells.</span></li>
+                </ul>
+            </li>
+            <li><span>Panel Instructions:</span>
+                <ul class = "subList">
+                    <li><span>Pause Button: Pauses and resumes the game. Note: the timer stops and the board cannot be interacted with when the game is paused.</span></li>
+                    <li><span>Timer: Displays how many seconds you've been playing for.</span></li>
+                    <li><span>Flags Left: Displays how many mines there are on the board minus the amount of flags on the board. This number <em>can</em> be negative, which means you are using more flags than there are mines.</span></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id = "input">
+        <div id = "padding-input">
+            <label for = "sizeInput"><span>Size of the board: {{cellsPerRow}} by {{cellsPerRow}} board</span></label><br>
+            <input id = "sizeInput" name = "sizeInput" required = "true" type = "range" min = "3" max = "20" [(ngModel)] = "cellsPerRow" (input) = "resetMines()"><br>
+            <label for = "mineInput"><span>Mines on the board: {{mines}} mines</span></label><br>
+            <input id = "mineInput" name = "mineInput" required = "true" type = "range" [min] = "cellsPerRow" [max] = "maxMines()" [(ngModel)] = "mines">
+            <input id = "submit" name = "submit" type = "submit" value = "Submit" (click) = "this.submission()">
+        </div>
+    </div>
 </div>
 <div id = "end_screen" *ngIf = "getGameOver() && !getPlaying()">
     <app-end-screen [board] = "board" [timer] = "timer" (emitter) = "processEmit2($event)"></app-end-screen>
