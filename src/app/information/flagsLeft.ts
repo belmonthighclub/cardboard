@@ -24,7 +24,7 @@ export class FlagsLeft {
     }
 
     public getFlagCoeff(): boolean { //basically returns 'flag ' when flagsLeft = 1, and 'flags' otherwise
-        return this.flagsLeft == 1;
+        return this.getFlagsPlaced() == 1;
     }
 
     public getFlagsPlaced(): number {

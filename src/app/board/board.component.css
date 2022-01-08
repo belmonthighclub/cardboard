@@ -4,12 +4,23 @@
     margin: 5px;
     border-spacing: 5px;
 }
+
 img {
     background-color: #fceb03ff;
 }
+
 .blank {
+    background-color: deepskyblue;
+}
+
+.cellsInRows {
     background-color: aqua;
 }
+
+#board {
+    margin: auto;
+}
+
 .rows {
     display: flex;
 }

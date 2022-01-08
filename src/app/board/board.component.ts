@@ -102,6 +102,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
     else if (this.board.checkWinCondition()) {
       num = 1;
+      this.timer.setLowestTime();
     }
     this.emitter.emit(num);
   }

@@ -40,7 +40,7 @@ export class EndScreenComponent implements OnInit, OnDestroy {
     let nonMines: number = 0;
     this.board.getCells().forEach(row => {
       row.forEach(cell => {
-        if (!cell.getIsRevealed() && !cell.getIsMine()) {
+        if (cell.getIsRevealed() && !cell.getIsMine()) {
           nonMines++;
         }
       });

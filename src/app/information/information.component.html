@@ -1,10 +1,4 @@
 <body>
-    <!--<div id = "won" *ngIf = "getBoard().checkWinCondition()">
-        <h4>Congrats on the win!</h4>
-    </div>
-    <div id = "lost" *ngIf = "getBoard().checkLossCondition() && !getBoard().checkWinCondition()">
-        <h4>Oops! You lost!</h4>
-    </div>-->
     <div id = "information">
         <div class = "info" id = "pauseButton">
             <button id = "button" (click) = "togglePause()">
@@ -16,7 +10,7 @@
             <span id = "time">Time: {{getTimer().getTime()}} second</span><span *ngIf = "!(getTimer().getTimeCoeff())">s</span>
         </div>
         <div class = "info" id = "flagCount">
-            <span id = "flags">Flags Left: {{getBoard().getFlagCount().getFlagsLeft()}} flag</span><span *ngIf = "!(getBoard().getFlagCount().getFlagCoeff())">s</span>
+            <span id = "flags">Flags Left: {{getBoard().getFlagCount().getFlagsLeft()}} flag</span><span *ngIf = "getBoard().getFlagCount().getFlagsLeft() != 1">s</span>
         </div>
     </div>
 </body>
