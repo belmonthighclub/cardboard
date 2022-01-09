@@ -64,10 +64,10 @@ p, #padding-input {
 
 /*INPUT RANGE STYLING, CREDIT TO https://www.cssportal.com/style-input-range/*/
 input[type=range] {
-    height: 10px;
-    background-color: transparent;
+    height: 26px;
     -webkit-appearance: none;
-    margin: 10px 5px;
+    margin: 10px 0;
+    background-color: transparent;
     width: 40%;
 }
 input[type=range]:focus {
