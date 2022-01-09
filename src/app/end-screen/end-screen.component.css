@@ -10,3 +10,14 @@ button:hover {
     height: 45px;
     padding: 2.5px;
 }
+
+.infoText {
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: seagreen;
+}
+
+#next {
+    color: rebeccapurple;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}

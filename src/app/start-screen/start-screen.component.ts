@@ -16,7 +16,7 @@ export class StartScreenComponent implements OnInit, OnDestroy {
   public mines: number = 10;
   public board: Board = new Board(9, 10);
   public timer: Timer = new Timer();
-  private playing: boolean = true;
+  private playing: boolean = false;
   private victory: boolean | null = null;
   private subscription: Subscription = new Subscription(); //used to loop a method
   

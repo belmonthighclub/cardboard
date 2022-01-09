@@ -36,6 +36,7 @@ export class Board {
         }
         if (cell.getIsMine()) {
             cell.setIsRevealed(true);
+            this.canInteract = false;
         }
         else if (cell.getIsRevealed()) {
 

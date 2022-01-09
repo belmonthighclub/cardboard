@@ -29,4 +29,6 @@ body {
 
 #timer, #flagCount {
     padding: 20px 0px;
+    font-family: Papyrus;
+    color: springgreen;
 }

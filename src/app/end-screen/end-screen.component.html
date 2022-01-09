@@ -1,13 +1,13 @@
 <div id = "won" *ngIf = "board.checkWinCondition()">
-    <h2>Congrats on the win!</h2>
-    <h3>You found {{board.getMines()}} mines in {{timer.getExactTime()}} second<span *ngIf = "timer.getExactTime() != 1">s</span>, revealing {{getNonMines()}} cell<span *ngIf = "getNonMines() != 1">s</span> and marking {{board.getFlagCount().getFlagsPlaced()}} cell<span *ngIf = "!(board.getFlagCount().getFlagCoeff())">s</span>!</h3>
+    <h2 class = "infoText">Congrats on the win!</h2>
+    <h3 class = "infoText">You found {{board.getMines()}} mines, revealed {{getNonMines()}} cell<span *ngIf = "getNonMines() != 1">s</span> and marked {{board.getFlagCount().getFlagsPlaced()}} cell<span *ngIf = "!(board.getFlagCount().getFlagCoeff())">s</span> in {{timer.getExactTime()}} second<span *ngIf = "timer.getExactTime() != 1">s</span>!</h3>
 </div>
 <div id = "lost" *ngIf = "board.checkLossCondition() && !board.checkWinCondition()">
-    <h2>Oops! You lost!</h2>
-    <h3>You successfully marked {{board.getCorrectMarks()}} mine<span *ngIf = "board.getCorrectMarks() != 1">s</span> in {{timer.getTime()}} second<span *ngIf = "!(timer.getTimeCoeff())">s</span>, revealing {{getNonMines()}} cell<span *ngIf = "getNonMines() != 1">s</span>! Better luck next time!</h3>
+    <h2 class = "infoText">Oops! You lost!</h2>
+    <h3 class = "infoText">You successfully marked {{board.getCorrectMarks()}} mine<span *ngIf = "board.getCorrectMarks() != 1">s</span>, and revealed {{getNonMines()}} cell<span *ngIf = "getNonMines() != 1">s</span> in {{timer.getTime()}} second<span *ngIf = "!(timer.getTimeCoeff())">s</span>! Better luck next time!</h3>
 </div>
 <div id = "reset_button">
-    <h3><span *ngIf = "timer.getLowestTime() != -1">Your lowest time on this board is {{timer.getLowestTime()}} second<span *ngIf = "timer.getLowestTime() != 1">s</span>.</span><br>Want to play again with the same board?</h3>
+    <h3 id = "next"><span *ngIf = "timer.getLowestTime() != -1">Your lowest time on this board is {{timer.getLowestTime()}} second<span *ngIf = "timer.getLowestTime() != 1">s</span>.</span><br>Want to play again with the same board?</h3>
     <button (click) = "resetGame()">
         <img class = "button" src = "../../assets/reset.png">
     </button>
