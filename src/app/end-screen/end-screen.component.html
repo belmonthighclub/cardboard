@@ -4,7 +4,7 @@
 </div>
 <div id = "lost" *ngIf = "board.checkLossCondition() && !board.checkWinCondition()">
     <h2 class = "infoText">Oops! You lost!</h2>
-    <h3 class = "infoText">You successfully marked {{board.getCorrectMarks()}} mine<span *ngIf = "board.getCorrectMarks() != 1">s</span>, and revealed {{getNonMines()}} cell<span *ngIf = "getNonMines() != 1">s</span> in {{timer.getTime()}} second<span *ngIf = "!(timer.getTimeCoeff())">s</span>! Better luck next time!</h3>
+    <h3 class = "infoText">You successfully marked {{board.getCorrectMarks()}} mine<span *ngIf = "board.getCorrectMarks() != 1">s</span>, and revealed {{getNonMines()}} cell<span *ngIf = "getNonMines() != 1">s</span> in {{timer.getExactTime()}} second<span *ngIf = "!(timer.getTimeCoeff())">s</span>! Better luck next time!</h3>
 </div>
 <div id = "reset_button">
     <h3 id = "next"><span *ngIf = "timer.getLowestTime() != -1">Your lowest time on this board is {{timer.getLowestTime()}} second<span *ngIf = "timer.getLowestTime() != 1">s</span>.</span><br>Want to play again with the same board?</h3>
