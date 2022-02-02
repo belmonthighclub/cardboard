@@ -26,35 +26,35 @@ export class Cell {
         this.y = y;
         switch (surroundingMines) {
             case 1:
-                this.imageAddress = "../../assets/number1.png";
+                this.imageAddress = "./assets/number1.png";
                 break;
             case 2:
-                this.imageAddress = "../../assets/number2.png";
+                this.imageAddress = "./assets/number2.png";
                 break;
             case 3:
-                this.imageAddress = "../../assets/number3.png";
+                this.imageAddress = "./assets/number3.png";
                 break;
             case 4:
-                this.imageAddress = "../../assets/number4.png";
+                this.imageAddress = "./assets/number4.png";
                 break;
             case 5:
-                this.imageAddress = "../../assets/number5.png";
+                this.imageAddress = "./assets/number5.png";
                 break;
             case 6:
-                this.imageAddress = "../../assets/number6.png";
+                this.imageAddress = "./assets/number6.png";
                 break;
             case 7:
-                this.imageAddress = "../../assets/number7.png";
+                this.imageAddress = "./assets/number7.png";
                 break;
             case 8:
-                this.imageAddress = "../../assets/number8.png";
+                this.imageAddress = "./assets/number8.png";
                 break;
             default:
-                this.imageAddress = "../../assets/number0.png";
+                this.imageAddress = "./assets/number0.png";
                 break;
         }
         if (isMine) {
-            this.imageAddress = "../../assets/mine.png";
+            this.imageAddress = "./assets/mine.png";
         }
     }
 

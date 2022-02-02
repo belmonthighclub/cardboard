@@ -9,6 +9,6 @@
 <div id = "reset_button">
     <h3 id = "next"><span *ngIf = "timer.getLowestTime() != -1">Your lowest time on this board is {{timer.getLowestTime()}} second<span *ngIf = "timer.getLowestTime() != 1">s</span>.</span><br>Want to play again with the same board?</h3>
     <button (click) = "resetGame()">
-        <img class = "button" src = "/assets/reset.png">
+        <img class = "button" src = "./assets/reset.png">
     </button>
 </div>
